@@ -6,6 +6,7 @@ function App() {
     <div >
       <header >
         Bike Barn
+        Product List
       </header>
     </div>
   );
