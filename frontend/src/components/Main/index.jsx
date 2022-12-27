@@ -7,13 +7,8 @@ const Main = () => {
 	};
 
 	return (
-		<div className={styles.main_container}>
-			<nav className={styles.navbar}>
-				<h1>Bike Barn</h1>
-				<button className={styles.white_btn} onClick={handleLogout}>
-					Logout
-				</button>
-			</nav>
+		<div>
+			Bike Barn
 		</div>
 	);
 };
