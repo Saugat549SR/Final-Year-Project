@@ -5,26 +5,25 @@
 // import OtpForm from './components/Signup/OtpForm';
 // import ForgotPassword from './components/ForgotPassword';
 import { Navbar } from './components/Main/Navbar';
-import { Box} from '@mui/material';
-
+import { Box } from '@mui/material';
+import { Feed } from './components/Main/Feed';
 
 function App() {
-  const user = localStorage.getItem("token")
+  //const user = localStorage.getItem('token');
   return (
-   
-  //  <Routes>
-  //  {user && <Route path="/" exact element={<Main />} />}
-	// 		<Route path="/signup" exact element={<Signup />} />
-	// 		<Route path="/login" exact element={<Login />} />
-	// 		<Route path="/" element={<Navigate replace to="/login" />} />
-  //     <Route path="/otpform" exact element={<OtpForm />} />
-  //     <Route path="/forgot-password" exact element={<ForgotPassword/>}/>
-      
-  //  </Routes>
-  <Box>
-      <Navbar />
-  </Box>
+    //  <Routes>
+    //  {user && <Route path="/" exact element={<Main />} />}
+    // 		<Route path="/signup" exact element={<Signup />} />
+    // 		<Route path="/login" exact element={<Login />} />
+    // 		<Route path="/" element={<Navigate replace to="/login" />} />
+    //     <Route path="/otpform" exact element={<OtpForm />} />
+    //     <Route path="/forgot-password" exact element={<ForgotPassword/>}/>
 
+    //  </Routes>
+    <Box>
+      <Navbar />
+      <Feed />
+    </Box>
   );
 }
 

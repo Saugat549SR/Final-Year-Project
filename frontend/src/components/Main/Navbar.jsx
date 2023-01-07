@@ -14,7 +14,6 @@ import {
 import TwoWheelerTwoToneIcon from '@mui/icons-material/TwoWheelerTwoTone';
 import { ShoppingCart } from '@mui/icons-material';
 import { useState } from 'react';
-import logo from '../../images/logo.png';
 
 const StyledToolbar = styled(Toolbar)({
   display: 'flex',
@@ -46,26 +45,14 @@ const UserBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-const logos = styled('div')(({ theme }) => ({}));
-
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
   return (
     <AppBar position="sticky" style={{ maxHeight: '50px' }}>
       <StyledToolbar>
-        <logos>
-          <img
-            src={logo}
-            alt="logo"
-            style={{ maxWidth: '70px', marginRight: '10px' }}
-          />
-          <Typography
-            variant="h6"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            BIKE BARN
-          </Typography>
-        </logos>
+        <Typography variant="h6" sx={{ display: { xs: 'none', sm: 'block' } }}>
+          BIKE BARN
+        </Typography>
         <TwoWheelerTwoToneIcon sx={{ display: { xs: 'block', sm: 'none' } }} />
         <Search>
           <InputBase placeholder="search" />
