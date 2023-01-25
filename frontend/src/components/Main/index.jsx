@@ -1,16 +1,16 @@
-import styles from "./styles.module.css";
+import { Navbar } from './Homepage/Navbar';
+import { Box } from '@mui/material';
+import { Feed } from './Homepage/Feed';
+import Footer from './Homepage/Footer';
 
 const Main = () => {
-	const handleLogout = () => {
-		localStorage.removeItem('token');
-		window.location.reload();
-	};
-
-	return (
-		<div>
-			Bike Barn
-		</div>
-	);
+  return (
+    <Box>
+      <Navbar />
+      <Feed />
+      <Footer />
+    </Box>
+  );
 };
 
 export default Main;
