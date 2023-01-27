@@ -8,21 +8,27 @@ import MetaData from './Products/MetaData';
 import { getProduct } from '../../actions/productAction';
 import { useSelector, useDispatch } from 'react-redux';
 import { Fragment, useEffect } from 'react';
+import Loader from './Loader/Loader';
+import { useAlert } from 'react-alert';
 
 const Main = () => {
+  const alert = useAlert();
   const dispatch = useDispatch();
   const { loading, error, products, productsCount } = useSelector(
     (state) => state.products
   );
 
   useEffect(() => {
+    if (error) {
+      return alert.error(error);
+    }
     dispatch(getProduct());
-  }, [dispatch]);
+  }, [dispatch, error]);
 
   return (
     <Fragment>
       {loading ? (
-        'loading'
+        <Loader />
       ) : (
         <Box>
           <MetaData title="Bike Barn" />
