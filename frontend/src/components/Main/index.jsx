@@ -23,7 +23,7 @@ const Main = () => {
       return alert.error(error);
     }
     dispatch(getProduct());
-  }, [dispatch, error]);
+  }, [dispatch, error, alert]);
 
   return (
     <Fragment>
@@ -37,7 +37,9 @@ const Main = () => {
           <h2 className="homeHeading">Features Products</h2>
           <div className="container">
             {products &&
-              products.map((product) => <Product product={product} />)}
+              products.map((product, index) => (
+                <Product product={product} key={index} />
+              ))}
           </div>
           <Footer />
         </Box>
