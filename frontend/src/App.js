@@ -5,7 +5,8 @@ import Login from './components/Login';
 import OtpForm from './components/Signup/OtpForm';
 import ForgotPassword from './components/ForgotPassword';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ProductDetails } from './components/Main/Products/ProductDetails.jsx';
+import { ProductDetails } from './components/Main/Products/ProductDetails';
+import Dashboard from './components/admin/Dashboard';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/otpform" exact element={<OtpForm />} />
         <Route path="/forgot-password" exact element={<ForgotPassword />} />
         <Route path="/product/:id" exact element={<ProductDetails />} />
+        <Route path="/admin/dashboard" exact element={<Dashboard />} />
       </Routes>
     </Router>
   );
