@@ -7,6 +7,7 @@ import ForgotPassword from './components/ForgotPassword';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ProductDetails } from './components/Main/Products/ProductDetails';
 import Dashboard from './components/admin/Dashboard';
+import ProductList from './components/admin/ProductList';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/forgot-password" exact element={<ForgotPassword />} />
         <Route path="/product/:id" exact element={<ProductDetails />} />
         <Route path="/admin/dashboard" exact element={<Dashboard />} />
+        <Route path="/admin/products" exact element={<ProductList />} />
       </Routes>
     </Router>
   );
