@@ -2,18 +2,21 @@ import React from 'react';
 import {
   AppBar,
   Toolbar,
-  Typography,
   Box,
   styled,
   InputBase,
   Badge,
-  Avatar,
   MenuItem,
-  Menu,
+  Button,
+  Select,
 } from '@mui/material';
 import TwoWheelerTwoToneIcon from '@mui/icons-material/TwoWheelerTwoTone';
-import { ShoppingCart } from '@mui/icons-material';
+import { ShoppingCart, Login } from '@mui/icons-material';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useAlert } from 'react-alert';
+import { logout } from '../../../actions/userAction';
 
 const StyledToolbar = styled(Toolbar)({
   display: 'flex',
@@ -45,14 +48,27 @@ const UserBox = styled(Box)(({ theme }) => ({
   },
 }));
 
+const Text = styled('div')`
+  font-size: 16px;
+  font-weight: 400;
+  color: #333;
+`;
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const alert = useAlert();
+  const { user, loading } = useSelector((state) => state.user);
+  const logoutHand = () => {
+    dispatch(logout());
+    alert.success('Logged out Successfully');
+  };
+  const firstName = `${user && user.firstName}`;
   return (
     <AppBar position="sticky" style={{ maxHeight: '50px' }}>
       <StyledToolbar>
-        <Typography variant="h6" sx={{ display: { xs: 'none', sm: 'block' } }}>
+        <Text variant="h6" sx={{ display: { xs: 'none', sm: 'block' } }}>
           BIKE BARN
-        </Typography>
+        </Text>
         <TwoWheelerTwoToneIcon sx={{ display: { xs: 'block', sm: 'none' } }} />
         <Search>
           <InputBase placeholder="search" />
@@ -61,37 +77,70 @@ export const Navbar = () => {
           <Badge>
             <ShoppingCart />
           </Badge>
-          <Avatar
-            sx={{ width: 30, height: 30 }}
-            src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            onClick={(e) => setOpen(true)}
-          />
         </Icons>
-        <UserBox onClick={(e) => setOpen(true)}>
-          <Avatar
-            sx={{ width: 30, height: 30 }}
-            src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          />
-        </UserBox>
+        <UserBox onClick={(e) => setOpen(true)}></UserBox>
+
+        {user ? (
+          <Select
+            value={firstName}
+            sx={{
+              backgroundColor: 'white',
+              width: '150px',
+              borderRadius: '0.25rem',
+              p: '0.25rem 1rem',
+              '& .MuiSvgIcon-root': {
+                pr: '0.25rem',
+                width: '3rem',
+              },
+              '& .MuiSelect-select:focus': {
+                backgroundColor: 'white',
+              },
+            }}
+            input={<InputBase />}
+          >
+            <MenuItem>{user.firstName}</MenuItem>
+            {user && user.role !== 'admin' ? (
+              <Link
+                to="/order"
+                style={{ textDecoration: 'none', color: 'black' }}
+              >
+                <MenuItem>Orders</MenuItem>
+              </Link>
+            ) : (
+              <Link
+                to="/admin/dashboard"
+                style={{ textDecoration: 'none', color: 'black' }}
+              >
+                <MenuItem>Dashboard</MenuItem>
+              </Link>
+            )}
+            <Link
+              to="/account"
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              <MenuItem>My account</MenuItem>
+            </Link>
+            <Link
+              to="/"
+              onClick={logoutHand}
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              <MenuItem>Logout</MenuItem>
+            </Link>
+          </Select>
+        ) : (
+          !loading && (
+            <Button
+              variant="contained"
+              endIcon={<Login />}
+              component={Link}
+              to="/login"
+            >
+              Login
+            </Button>
+          )
+        )}
       </StyledToolbar>
-      <Menu
-        id="demo-positioned-menu"
-        aria-labelledby="demo-positioned-button"
-        open={open}
-        onClose={(e) => setOpen(false)}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-      >
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>My account</MenuItem>
-        <MenuItem>Logout</MenuItem>
-      </Menu>
     </AppBar>
   );
 };

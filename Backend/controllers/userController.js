@@ -1,5 +1,7 @@
 const ErrorHandler = require('../utils/errorhandler');
+const cloudinary = require('cloudinary');
 const User = require('../models/userModel');
+const jwt = require('jsonwebtoken');
 const catchAsyncErrors = require('../middleware/catchAsyncError');
 const tokenSend = require('../utils/jwtToken');
 const sendEmail = require('../utils/sendEmail');
@@ -7,6 +9,26 @@ const crypto = require('crypto');
 
 //Register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
+  // if (!req.body.avatar) {
+  //   console.error('Error: no avatar image provided');
+  //   return res.status(400).json({ message: 'No avatar image provided' });
+  // }
+
+  // const cloudInary = await cloudinary.v2.uploader.upload(req.body.avatar, {
+  //   folder: 'register',
+  //   width: 150,
+  //   crop: 'scale',
+  // });
+
+  // if (!cloudInary) {
+  //   console.error('Error: failed to upload image to Cloudinary');
+  //   return res
+  //     .status(500)
+  //     .json({ message: 'Error uploading image to Cloudinary' });
+  // }
+
+  // console.log(cloudInary);
+
   const { firstName, lastName, email, password } = req.body;
 
   const user = await User.create({
@@ -15,13 +37,65 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     email,
     password,
     avatar: {
+      // public_id: cloudInary.public_id,
+      // url: cloudInary.secure_url,
       public_id: 'sample Id',
       url: 'dpUrl',
     },
   });
 
-  tokenSend(user, 201, res);
+  const token = jwt.sign({ id: user._id }, process.env.JWTPRIVATEKEY, {
+    expiresIn: '1d',
+  });
+
+  const verifyLink = `${req.protocol}://${req.get(
+    'host'
+  )}/api/users/verify/${token}`;
+
+  const message = `Please click the following link to verify your email: \n\n ${verifyLink}`;
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: `Email Verification`,
+      message,
+    });
+    res.status(200).json({
+      sucess: true,
+      message: `Email sent to ${user.email} sucessfully`,
+    });
+  } catch (error) {
+    console.error('Error sending verification email:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error sending verification email. Please try again later',
+    });
+  }
 });
+//verify user
+exports.verifyUser = async (req, res) => {
+  const { token } = req.params;
+  try {
+    const decoded = jwt.verify(token, process.env.JWTPRIVATEKEY);
+    const user = await User.findByIdAndUpdate(
+      decoded.id,
+      { isVerified: true },
+      { new: true, runValidators: true }
+    );
+    if (!user) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'User not found',
+      });
+    }
+
+    res.redirect('http://localhost:3000/login?verified=true');
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      message: 'Invalid token',
+    });
+  }
+};
 
 //login
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {

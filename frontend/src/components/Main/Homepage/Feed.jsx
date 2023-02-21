@@ -29,7 +29,9 @@ const BannerContent = styled(Box)(() => ({
   maxWidth: '420',
 }));
 
-const Title = styled(Typography)(({ theme }) => ({
+const Title = styled('div')(({ theme }) => ({
+  fontSize: '16px',
+  fontWeight: '400',
   lineHeight: 1.5,
   fontSize: '70px',
   marginBottom: '20px',
@@ -39,7 +41,9 @@ const Title = styled(Typography)(({ theme }) => ({
   },
 }));
 
-const Description = styled(Typography)(({ theme }) => ({
+const Description = styled('div')(({ theme }) => ({
+  fontSize: '16px',
+  fontWeight: '400',
   lineHeight: 1.25,
   letterSpacing: 1.25,
   marginBottom: '20px',
@@ -69,6 +73,11 @@ const Wrapper = styled('div')`
   display: flex;
   justifycontent: center;
 `;
+const Text = styled('div')`
+  font-size: 16px;
+  font-weight: 400;
+  color: #333;
+`;
 
 export const Feed = () => {
   return (
@@ -93,9 +102,9 @@ export const Feed = () => {
             <Wrapper>
               <Image src={product.img} />
               <BannerContent>
-                <Typography fontSize={{ xs: '9px', sm: '18px' }}>
+                <Text fontSize={{ xs: '9px', sm: '18px' }}>
                   Own your dream bike
-                </Typography>
+                </Text>
                 <Title variant="h2">{product.title}</Title>
                 <Description fontSize={{ xs: '9px', sm: '18px' }}>
                   {product.desc}

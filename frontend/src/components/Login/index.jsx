@@ -1,78 +1,94 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState, useEffect, Fragment } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useAlert } from 'react-alert';
+import { clearErrors, login } from '../../actions/userAction';
+import Loader from '../Main/Loader/Loader';
 const Login = () => {
-  const [data, setData] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const alert = useAlert();
+  const { error, loading, isAuthenticated } = useSelector(
+    (state) => state.user
+  );
 
-  const handleChange = ({ currentTarget: input }) => {
-    setData({ ...data, [input.name]: input.value });
-  };
+  const [loginEmail, setLogin] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
 
-  const handleSubmit = async (e) => {
+  const loginSubmit = (e) => {
     e.preventDefault();
-    try {
-      const url = 'http://localhost:8080/api/users/login';
-      const { data: res } = await axios.post(url, data);
-      localStorage.setItem('token', res.data);
-      window.location = '/';
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setError(error.response.data.message);
-      }
-    }
+    dispatch(login(loginEmail, loginPassword));
   };
 
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [dispatch, error, alert, isAuthenticated, navigate]);
+  const queryParams = new URLSearchParams(location.search);
+  const verified = queryParams.get('verified');
   return (
-    <div className={styles.login_container}>
-      <div className={styles.login_form_container}>
-        <div className={styles.left}>
-          <form className={styles.form_container} onSubmit={handleSubmit}>
-            <h1>Login to Your Account</h1>
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              onChange={handleChange}
-              value={data.email}
-              required
-              className={styles.input}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              onChange={handleChange}
-              value={data.password}
-              required
-              className={styles.input}
-            />
+    <Fragment>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className={styles.login_container}>
+          <div className={styles.login_form_container}>
+            <div className={styles.left}>
+              {verified && (
+                <p className={styles.verified_message}>
+                  Email verified. You can now login.
+                </p>
+              )}
+              <form className={styles.form_container} onSubmit={loginSubmit}>
+                <h1>Login to Your Account</h1>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  required
+                  value={loginEmail}
+                  onChange={(e) => setLogin(e.target.value)}
+                  className={styles.input}
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  required
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                  className={styles.input}
+                />
 
-            <Link to="/forgot-password" style={{ alignSelf: 'flex-start' }}>
-              <p style={{ padding: '0 12px' }}>Forgot Password ?</p>
-            </Link>
-            {error && <div className={styles.error_msg}>{error}</div>}
-            <button type="submit" className={styles.green_btn}>
-              Sign In
-            </button>
-          </form>
+                <Link to="/password/forgot" style={{ alignSelf: 'flex-start' }}>
+                  <p style={{ padding: '0 12px' }}>Forgot Password ?</p>
+                </Link>
+                {error && <div className={styles.error_msg}>{error}</div>}
+                <button type="submit" className={styles.green_btn}>
+                  Sign In
+                </button>
+              </form>
+            </div>
+            <div className={styles.right}>
+              <h1>New Here ?</h1>
+              <Link to="/signup">
+                <button type="button" className={styles.white_btn}>
+                  Sign Up
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
-        <div className={styles.right}>
-          <h1>New Here ?</h1>
-          <Link to="/signup">
-            <button type="button" className={styles.white_btn}>
-              Sign Up
-            </button>
-          </Link>
-        </div>
-      </div>
-    </div>
+      )}
+    </Fragment>
   );
 };
 

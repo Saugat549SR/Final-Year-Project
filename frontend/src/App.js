@@ -2,12 +2,13 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import Index from './components/Main/Index';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import OtpForm from './components/Signup/OtpForm';
+
 import ForgotPassword from './components/ForgotPassword';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ProductDetails } from './components/Main/Products/ProductDetails';
 import Dashboard from './components/admin/Dashboard';
 import ProductList from './components/admin/ProductList';
+import NewProduct from './components/admin/NewProduct';
 
 function App() {
   return (
@@ -17,11 +18,11 @@ function App() {
         <Route path="/signup" exact element={<Signup />} />
         <Route path="/login" exact element={<Login />} />
         <Route path="/" element={<Navigate replace to="/login" />} />
-        <Route path="/otpform" exact element={<OtpForm />} />
         <Route path="/forgot-password" exact element={<ForgotPassword />} />
         <Route path="/product/:id" exact element={<ProductDetails />} />
         <Route path="/admin/dashboard" exact element={<Dashboard />} />
         <Route path="/admin/products" exact element={<ProductList />} />
+        <Route path="/admin/product" exact element={<NewProduct />} />
       </Routes>
     </Router>
   );

@@ -1,40 +1,60 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { clearErrors, register } from '../../actions/userAction';
 import styles from './styles.module.css';
+import Loader from '../Main/Loader/Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import { useAlert } from 'react-alert';
 
 const Signup = () => {
-  const [data, setData] = useState({
-    firstName: '',
-    lastName: '',
+  const dispatch = useDispatch();
+  const alert = useAlert();
+  const [user, setUser] = useState({
+    firstname: '',
+    lastname: '',
     email: '',
     password: '',
   });
-  const [error, setError] = useState('');
-  const [msg, setMsg] = useState('');
-  const navigate = useNavigate();
+  const { error, loading } = useSelector((state) => state.user);
 
-  const handleChange = ({ currentTarget: input }) => {
-    setData({ ...data, [input.name]: input.value });
-  };
-
-  const handleSubmit = async (e) => {
+  const { firstName, lastName, email, password } = user;
+  const [avatar, setAvatar] = useState('/Profile.png');
+  const [avatarPreview, setAvatarPreview] = useState('/Profile.png');
+  const registerSubmit = (e) => {
     e.preventDefault();
-    try {
-      const url = 'http://localhost:8080/api/users/register';
-      const { data: res } = await axios.post(url, data);
-      navigate('/otpform');
-      setMsg(res.message);
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setError(error.response.data.message);
-      }
+
+    const myForm = new FormData();
+
+    myForm.set('firstName', firstName);
+    myForm.set('lastName', lastName);
+    myForm.set('email', email);
+    myForm.set('password', password);
+    myForm.set('avatar', avatar);
+    dispatch(register(myForm));
+  };
+  const registerDataChange = (e) => {
+    if (e.target.name === 'avatar') {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setAvatarPreview(reader.result);
+          setAvatar(reader.result);
+        }
+      };
+
+      reader.readAsDataURL(e.target.files[0]);
+    } else {
+      setUser({ ...user, [e.target.name]: e.target.value });
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, error, alert]);
 
   return (
     <div className={styles.img}>
@@ -49,14 +69,18 @@ const Signup = () => {
             </Link>
           </div>
           <div className={styles.right}>
-            <form className={styles.form_container} onSubmit={handleSubmit}>
+            <form
+              className={styles.form_container}
+              onSubmit={registerSubmit}
+              encType="multipart/form-data"
+            >
               <h1>Create Account</h1>
               <input
                 type="text"
                 placeholder="First Name"
                 name="firstName"
-                onChange={handleChange}
-                value={data.firstName}
+                onChange={registerDataChange}
+                value={firstName}
                 required
                 className={styles.input}
               />
@@ -65,8 +89,8 @@ const Signup = () => {
                 type="text"
                 placeholder="Last Name"
                 name="lastName"
-                onChange={handleChange}
-                value={data.lastName}
+                onChange={registerDataChange}
+                value={lastName}
                 required
                 className={styles.input}
               />
@@ -75,8 +99,8 @@ const Signup = () => {
                 type="email"
                 placeholder="Email"
                 name="email"
-                onChange={handleChange}
-                value={data.email}
+                onChange={registerDataChange}
+                value={email}
                 required
                 className={styles.input}
               />
@@ -85,13 +109,20 @@ const Signup = () => {
                 type="password"
                 placeholder="Password"
                 name="password"
-                onChange={handleChange}
-                value={data.password}
+                onChange={registerDataChange}
+                value={password}
                 required
                 className={styles.input}
               />
-              {error && <div className={styles.error_msg}>{error}</div>}
-              {msg && <div className={styles.success_msg}>{msg}</div>}
+              <div id={styles.registerImage}>
+                <img src={avatarPreview} alt="Avatar Preview" />
+                <input
+                  type="file"
+                  name="avatar"
+                  accept="image/*"
+                  onChange={registerDataChange}
+                />
+              </div>
               <button type="submit" className={styles.green_btn}>
                 Signup
               </button>

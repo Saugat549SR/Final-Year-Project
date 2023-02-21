@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled, Box, Stack, Typography } from '@mui/material';
+import { styled, Box, Stack } from '@mui/material';
 import { Facebook, Instagram, Twitter } from '@mui/icons-material';
 
 const SocialBox = styled(Box)({
@@ -7,7 +7,17 @@ const SocialBox = styled(Box)({
   gap: 10,
   color: 'white',
 });
-
+const Text = styled('div')`
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+`;
+const Terms = styled('div')`
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  margin-left: 33%;
+`;
 const Footer = () => {
   return (
     <Box
@@ -18,18 +28,18 @@ const Footer = () => {
     >
       <Stack direction={{ xs: 'row', md: 'row' }} p={7}>
         <Box flex={2}>
-          <Typography color={'white'}>Contact Us</Typography>
-          <Typography color={'white'}>Contact Us</Typography>
-          <Typography color={'white'}>Contact Us</Typography>
-          <Typography color={'white'}>Contact Us</Typography>
+          <Text color={'white'}>Contact Us</Text>
+          <Text color={'white'}>Contact Us</Text>
+          <Text color={'white'}>Contact Us</Text>
+          <Text color={'white'}>Contact Us</Text>
         </Box>
         <Box flex={2}>
-          <Typography color={'white'}>Data Policy</Typography>
-          <Typography color={'white'}>Data Safty</Typography>
-          <Typography color={'white'}>Email</Typography>
+          <Text color={'white'}>Data Policy</Text>
+          <Text color={'white'}>Data Safty</Text>
+          <Text color={'white'}>Email</Text>
         </Box>
         <Box>
-          <Typography color={'white'}>Follow Us</Typography>
+          <Text color={'white'}>Follow Us</Text>
           <SocialBox>
             <Facebook />
             <Instagram />
@@ -38,10 +48,10 @@ const Footer = () => {
         </Box>
       </Stack>
       <hr />
-      <Typography color={'white'} variant={'body2'} align="center">
+      <Terms variant={'body2'}>
         &copy;{new Date().getFullYear()} BikeBarn | All right reserved | Terms
         of Service | Privacy
-      </Typography>
+      </Terms>
     </Box>
   );
 };
