@@ -3,21 +3,27 @@ const ErrorHandler = require('../utils/errorhandler');
 const catchAsyncErrors = require('../middleware/catchAsyncError');
 const ApiFeatures = require('../utils/apifeatures');
 const cloudinary = require('cloudinary');
+const DataUriParser = require('datauri/parser.js');
+const path = require('path');
+
+const getDataUri = (file) => {
+  const parser = new DataUriParser();
+  const extName = path.extname(file.originalname);
+  const uri = parser.format(extName, file.buffer);
+  return uri;
+};
 
 // create Product -- Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
-  let images = [];
-
-  if (typeof req.body.images === 'string') {
-    images.push(req.body.images);
-  } else {
-    images = req.body.images;
-  }
+  let images = req.files;
+  console.log(images);
+  //const imageData = getDataUri(image);
 
   const imagesLinks = [];
 
   for (let i = 0; i < images.length; i++) {
-    const result = await cloudinary.v2.uploader.upload(images[i], {
+    const imageData = getDataUri(images[i]);
+    const result = await cloudinary.v2.uploader.upload(imageData.content, {
       folder: 'products',
     });
 

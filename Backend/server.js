@@ -8,9 +8,10 @@ const connection = require('./database');
 const userRoutes = require('./routes/userRoute');
 const dotenv = require('dotenv');
 const product = require('./routes/productRoute');
+const order = require('./routes/orderRoute');
 const errorMiddleware = require('./middleware/error');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 // database connection
 connection();
 
@@ -26,8 +27,8 @@ cloudinary.config({
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(fileUpload());
+//app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(fileUpload());
 
 // middleware for error
 app.use(errorMiddleware);
@@ -36,6 +37,7 @@ app.use(errorMiddleware);
 app.use('/api/users', userRoutes);
 
 app.use('/api/v1', product);
+app.use('/api/v1', order);
 
 const port = process.env.PORT || 8080;
 const server = app.listen(port, () =>

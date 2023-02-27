@@ -10,9 +10,11 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import SpellcheckIcon from '@material-ui/icons/Spellcheck';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import SideBar from './Sidebar';
+import { useNavigate } from 'react-router-dom';
 import { NEW_PRODUCT_RESET } from '../../constants/productConstants';
 
 const NewProduct = ({ history }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const alert = useAlert();
   const { loading, error, success } = useSelector((state) => state.newProduct);
@@ -41,43 +43,42 @@ const NewProduct = ({ history }) => {
     }
     if (success) {
       alert.success('Product Creates Successfully');
-      history.push('/admin/dashboard');
+      //navigate('/admin/dashboard');
       dispatch({ type: NEW_PRODUCT_RESET });
     }
   }, [dispatch, alert, error, history, success]);
 
   const createProductSubmitHandler = (e) => {
     e.preventDefault();
-
+    console.log(images);
     const myForm = new FormData();
 
     myForm.set('name', name);
     myForm.set('price', price);
     myForm.set('description', description);
     myForm.set('category', category);
-
+    console.log(images);
     images.forEach((image) => {
       myForm.append('images', image);
     });
     dispatch(createProduct(myForm));
   };
   const createProductImagesChange = (e) => {
+    e.preventDefault();
     const files = Array.from(e.target.files);
-
-    setImages([]);
-    setImagesPreview([]);
+    console.log(files);
+    setImages(files);
+    // setImages([]);
+    // setImagesPreview([]);
 
     files.forEach((file) => {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImagesPreview((old) => [...old, reader.result]);
-          setImages((old) => [...old, reader.result]);
-        }
-      };
-
-      reader.readAsDataURL(file);
+      // const reader = new FileReader();
+      // reader.onload = () => {
+      //   if (reader.readyState === 2) {
+      //     setImagesPreview((old) => [...old, reader.result]);
+      //   }
+      // };
+      // reader.readAsDataURL(file);
     });
   };
   return (

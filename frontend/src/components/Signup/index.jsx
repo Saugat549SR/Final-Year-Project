@@ -8,12 +8,15 @@ import { useAlert } from 'react-alert';
 
 const Signup = () => {
   const dispatch = useDispatch();
+  const [ss, setss] = useState();
   const alert = useAlert();
   const [user, setUser] = useState({
     firstname: '',
     lastname: '',
     email: '',
     password: '',
+    avatar: '',
+    avatarPreview: null,
   });
   const { error, loading } = useSelector((state) => state.user);
 
@@ -29,11 +32,16 @@ const Signup = () => {
     myForm.set('lastName', lastName);
     myForm.set('email', email);
     myForm.set('password', password);
-    myForm.set('avatar', avatar);
+    myForm.set('image', ss);
+    console.log(myForm);
+    // for (let key of myForm.keys()) {
+    //   console.log(key + ': ' + myForm.get(key));
+    // }
     dispatch(register(myForm));
   };
   const registerDataChange = (e) => {
     if (e.target.name === 'avatar') {
+      setss(e.target.files[0]);
       const reader = new FileReader();
 
       reader.onload = () => {

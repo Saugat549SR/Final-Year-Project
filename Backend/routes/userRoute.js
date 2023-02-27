@@ -16,8 +16,21 @@ const {
 } = require('../controllers/userController');
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
 const router = express.Router();
+const multer = require('multer');
 
-router.route('/register').post(registerUser);
+const upload = multer({
+  fileFilter(req, file, callback) {
+    if (!file.originalname.match(/.(jpg|jpeg|png)$/)) {
+      return;
+    }
+    callback(undefined, true);
+  },
+});
+
+//router.route('/register').post(upload.any(), registerUser);
+// UploadStream.single() || upload.array()
+
+router.post('/register', upload.single('image'), registerUser);
 
 router.route('/login').post(loginUser);
 

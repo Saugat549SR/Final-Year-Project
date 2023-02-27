@@ -6,28 +6,41 @@ const catchAsyncErrors = require('../middleware/catchAsyncError');
 const tokenSend = require('../utils/jwtToken');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
+const DataUriParser = require('datauri/parser.js');
+const path = require('path');
+
+const getDataUri = (file) => {
+  const parser = new DataUriParser();
+  const extName = path.extname(file.originalname);
+  const uri = parser.format(extName, file.buffer);
+  return uri;
+};
 
 //Register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  // if (!req.body.avatar) {
-  //   console.error('Error: no avatar image provided');
-  //   return res.status(400).json({ message: 'No avatar image provided' });
-  // }
+  const image = req.file;
 
-  // const cloudInary = await cloudinary.v2.uploader.upload(req.body.avatar, {
-  //   folder: 'register',
-  //   width: 150,
-  //   crop: 'scale',
-  // });
+  console.log(image);
+  if (!image) {
+    console.error('Error: no avatar image provided');
+    return res.status(400).json({ message: 'No avatar image provided' });
+  }
 
-  // if (!cloudInary) {
-  //   console.error('Error: failed to upload image to Cloudinary');
-  //   return res
-  //     .status(500)
-  //     .json({ message: 'Error uploading image to Cloudinary' });
-  // }
+  const imageData = getDataUri(image);
+  const result = await cloudinary.v2.uploader.upload(imageData.content, {
+    folder: 'register',
+    width: 150,
+    crop: 'scale',
+  });
 
-  // console.log(cloudInary);
+  if (!result) {
+    console.error('Error: failed to upload image to Cloudinary');
+    return res
+      .status(500)
+      .json({ message: 'Error uploading image to Cloudinary' });
+  }
+
+  console.log(result);
 
   const { firstName, lastName, email, password } = req.body;
 
@@ -37,15 +50,15 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     email,
     password,
     avatar: {
-      // public_id: cloudInary.public_id,
-      // url: cloudInary.secure_url,
-      public_id: 'sample Id',
-      url: 'dpUrl',
+      public_id: result.public_id,
+      url: result.secure_url,
+      // public_id: 'sample Id',
+      // url: 'dpUrl',
     },
   });
 
   const token = jwt.sign({ id: user._id }, process.env.JWTPRIVATEKEY, {
-    expiresIn: '1d',
+    expiresIn: '1h',
   });
 
   const verifyLink = `${req.protocol}://${req.get(
