@@ -26,6 +26,14 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please enter your password'],
     select: false,
   },
+  address: {
+    type: String,
+    required: [true, 'Please enter your address'],
+  },
+  contact: {
+    type: Number,
+    required: [true, 'Please enter your valid contact number'],
+  },
   avatar: {
     public_id: {
       type: String,
@@ -63,7 +71,7 @@ userSchema.pre('save', async function (next) {
 //JWT Token
 userSchema.methods.getJWTToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWTPRIVATEKEY, {
-    expiresIn: '7d',
+    expiresIn: '1h',
   });
 };
 

@@ -15,12 +15,14 @@ const Signup = () => {
     lastname: '',
     email: '',
     password: '',
+    address: '',
+    contact: '',
     avatar: '',
     avatarPreview: null,
   });
   const { error, loading } = useSelector((state) => state.user);
 
-  const { firstName, lastName, email, password } = user;
+  const { firstName, lastName, email, password, address, contact } = user;
   const [avatar, setAvatar] = useState('/Profile.png');
   const [avatarPreview, setAvatarPreview] = useState('/Profile.png');
   const registerSubmit = (e) => {
@@ -32,6 +34,8 @@ const Signup = () => {
     myForm.set('lastName', lastName);
     myForm.set('email', email);
     myForm.set('password', password);
+    myForm.set('address', address);
+    myForm.set('contact', contact);
     myForm.set('image', ss);
     console.log(myForm);
     // for (let key of myForm.keys()) {
@@ -119,6 +123,24 @@ const Signup = () => {
                 name="password"
                 onChange={registerDataChange}
                 value={password}
+                required
+                className={styles.input}
+              />
+              <input
+                type="text"
+                placeholder="Address"
+                name="address"
+                onChange={registerDataChange}
+                value={address}
+                required
+                className={styles.input}
+              />
+              <input
+                type="number"
+                placeholder="Contact"
+                name="contact"
+                onChange={registerDataChange}
+                value={contact}
                 required
                 className={styles.input}
               />
