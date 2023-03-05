@@ -2,19 +2,14 @@
   position: absolute;
 
   left: 200px;
-  top: 100px;
+  top: 150px;
 }
 .account {
   color: rgba(0, 0, 0, 0.555);
   font: 500 2.2vmax 'Roboto';
   margin-left: 21%;
 }
-.sale {
-  color: rgba(0, 0, 0, 0.555);
-  font: 500 2.2vmax 'Roboto';
-  margin-left: 65%;
-  margin-top: -4%;
-}
+
 .profile {
   width: 25vmax;
   height: auto;

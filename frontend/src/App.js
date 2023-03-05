@@ -9,6 +9,7 @@ import Dashboard from './components/admin/Dashboard';
 import ProductList from './components/admin/ProductList';
 import NewProduct from './components/admin/NewProduct';
 import Profile from './components/User/profile';
+import UpdateProfile from './components/User/UpdateProfile';
 import store from './store';
 import { loadUser } from './actions/userAction';
 import React from 'react';
@@ -31,6 +32,7 @@ function App() {
         <Route path="/admin/products" exact element={<ProductList />} />
         <Route path="/admin/product" exact element={<NewProduct />} />
         <Route path="/account" exact element={<Profile />} />
+        <Route path="/update" exact element={<UpdateProfile />} />
       </Routes>
     </Router>
   );

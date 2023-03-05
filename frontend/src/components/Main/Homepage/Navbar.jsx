@@ -13,7 +13,7 @@ import {
 import TwoWheelerTwoToneIcon from '@mui/icons-material/TwoWheelerTwoTone';
 import { ShoppingCart, Login } from '@mui/icons-material';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAlert } from 'react-alert';
 import { logout } from '../../../actions/userAction';
@@ -63,10 +63,15 @@ export const Navbar = () => {
     alert.success('Logged out Successfully');
   };
   const firstName = `${user && user.firstName}`;
+  const navigate = useNavigate();
   return (
     <AppBar position="sticky" style={{ maxHeight: '50px' }}>
       <StyledToolbar>
-        <Text variant="h6" sx={{ display: { xs: 'none', sm: 'block' } }}>
+        <Text
+          variant="h6"
+          sx={{ display: { xs: 'none', sm: 'block' } }}
+          onClick={() => navigate('/')}
+        >
           BIKE BARN
         </Text>
         <TwoWheelerTwoToneIcon sx={{ display: { xs: 'block', sm: 'none' } }} />
