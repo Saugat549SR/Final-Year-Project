@@ -10,9 +10,11 @@ import ProductList from './components/admin/ProductList';
 import NewProduct from './components/admin/NewProduct';
 import Profile from './components/User/profile';
 import UpdateProfile from './components/User/UpdateProfile';
+import Cart from './components/Cart/Cart';
 import store from './store';
 import { loadUser } from './actions/userAction';
 import React from 'react';
+import ProtectedRoute from './components/Route/ProtectedRoute';
 
 function App() {
   React.useEffect(() => {
@@ -28,11 +30,14 @@ function App() {
         <Route path="/" element={<Navigate replace to="/login" />} />
         <Route path="/forgot-password" exact element={<ForgotPassword />} />
         <Route path="/product/:id" exact element={<ProductDetails />} />
-        <Route path="/admin/dashboard" exact element={<Dashboard />} />
-        <Route path="/admin/products" exact element={<ProductList />} />
-        <Route path="/admin/product" exact element={<NewProduct />} />
-        <Route path="/account" exact element={<Profile />} />
-        <Route path="/update" exact element={<UpdateProfile />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/admin/dashboard" exact element={<Dashboard />} />
+          <Route path="/admin/products" exact element={<ProductList />} />
+          <Route path="/admin/product" exact element={<NewProduct />} />
+          <Route path="/account" exact element={<Profile />} />
+          <Route path="/me/update" exact element={<UpdateProfile />} />
+        </Route>
+        <Route path="/cart" exact element={<Cart />} />
       </Routes>
     </Router>
   );

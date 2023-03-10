@@ -80,14 +80,15 @@ export const Navbar = () => {
         </Search>
         <Icons>
           <Badge>
-            <ShoppingCart />
+            <Link to="/cart">
+              <ShoppingCart />
+            </Link>
           </Badge>
         </Icons>
         <UserBox onClick={(e) => setOpen(true)}></UserBox>
 
         {user ? (
           <Select
-            value={firstName}
             sx={{
               backgroundColor: 'white',
               width: '150px',

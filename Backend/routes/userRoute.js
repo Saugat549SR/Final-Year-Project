@@ -46,7 +46,9 @@ router.route('/me').get(isAuthenticatedUser, getUserDetails);
 
 router.route('/password/update').put(isAuthenticatedUser, updatePassword);
 
-router.route('/me/update').put(isAuthenticatedUser, updateProfile);
+router
+  .route('/me/update')
+  .put(isAuthenticatedUser, upload.none(''), updateProfile);
 
 router
   .route('/admin/users')

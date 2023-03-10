@@ -50,7 +50,7 @@ const UserProfile = () => {
                 <span className="dateDetail"> Joined {formattedDate} </span>
               </div>
               <div className="editDetails">
-                <Link to="/update" style={{ textDecoration: 'none' }}>
+                <Link to="/me/update" style={{ textDecoration: 'none' }}>
                   <button className="edit">Edit</button>
                 </Link>
                 <Link to="/order" style={{ textDecoration: 'none' }}>

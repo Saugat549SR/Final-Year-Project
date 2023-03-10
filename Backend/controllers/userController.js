@@ -250,24 +250,39 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 });
 
 //update Profile
-exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
-  const newUserData = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-  };
+exports.updateProfile = async (req, res, next) => {
+  const user = await User.findOne({ _id: req.user._id });
 
-  //we will add cloudniary later
+  if (!user) throw ErrorHandler('Cannot upload to cloudinary!', 400);
 
-  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
-    new: true,
-    runValidators: true,
-    useFindAndModify: false,
-  });
-  res.status(200).json({
-    success: true,
-  });
-});
+  const { firstName, email, lastName, address, contact } = req.body;
+  user.firstName = firstName;
+  user.email = email;
+  user.lastName = lastName;
+  user.address = address;
+  user.contact = contact;
+
+  const avatar = req.body?.avatar;
+
+  if (avatar) {
+    const result = await cloudinary.v2.uploader.upload(avatar, {
+      folder: 'register',
+      width: 150,
+      crop: 'scale',
+    });
+
+    if (user.avatar.public_id) {
+      await cloudinary.v2.uploader.destroy(user.avatar.public_id);
+    }
+    user.avatar.public_id = result.public_id;
+    user.avatar.url = result.url;
+    await user.save();
+  } else {
+    await user.save();
+  }
+
+  return res.status(200).json({ success: true, user });
+};
 
 //get all users (admin can look user details)
 exports.getAllUser = catchAsyncErrors(async (req, res, next) => {

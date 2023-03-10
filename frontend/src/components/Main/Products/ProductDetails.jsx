@@ -4,6 +4,7 @@ import './ProductDetails.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductDetails } from '../../../actions/productAction';
 import { useParams } from 'react-router-dom';
+import { addItemsToCart } from '../../../actions/cartAction';
 export const ProductDetails = () => {
   const dispatch = useDispatch();
   const { product, loading, error } = useSelector(
@@ -13,6 +14,11 @@ export const ProductDetails = () => {
   useEffect(() => {
     dispatch(getProductDetails(params.id));
   }, [dispatch, params.id]);
+
+  const addToCartHandler = () => {
+    dispatch(addItemsToCart(params.id));
+    alert.success('Item Added to Cart');
+  };
 
   return (
     <Fragment>
@@ -37,7 +43,7 @@ export const ProductDetails = () => {
           <div className="detailsBlock-3">
             <h1>{`Rs ${product.price}`}</h1>
 
-            <button>Add to Cart</button>
+            <button onClick={addToCartHandler}>Add to Cart</button>
           </div>
           <div className="detailsBlock-4">
             Description: <p>{product.description}</p>
