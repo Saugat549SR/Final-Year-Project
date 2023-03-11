@@ -10,6 +10,7 @@ import ProductList from './components/admin/ProductList';
 import NewProduct from './components/admin/NewProduct';
 import Profile from './components/User/profile';
 import UpdateProfile from './components/User/UpdateProfile';
+import UpdatePassword from './components/User/UpdatePassword';
 import Cart from './components/Cart/Cart';
 import store from './store';
 import { loadUser } from './actions/userAction';
@@ -36,6 +37,7 @@ function App() {
           <Route path="/admin/product" exact element={<NewProduct />} />
           <Route path="/account" exact element={<Profile />} />
           <Route path="/me/update" exact element={<UpdateProfile />} />
+          <Route path="/password/update" exact element={<UpdatePassword />} />
         </Route>
         <Route path="/cart" exact element={<Cart />} />
       </Routes>

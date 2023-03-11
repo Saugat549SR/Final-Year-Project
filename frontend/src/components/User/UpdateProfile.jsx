@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
-// import MailOutlineIcon from '@material-ui/icons/MailOutline';
-// import FaceIcon from '@material-ui/icons/Face';
-// import PhoneIcon from '@material-ui/icons/Phone';
-// import BusinessIcon from '@material-ui/icons/Business';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import FaceIcon from '@material-ui/icons/Face';
+import PhoneIcon from '@material-ui/icons/Phone';
+import BusinessIcon from '@material-ui/icons/Business';
 import './updateProfile.css';
 import { useSelector, useDispatch } from 'react-redux';
 import Loader from '../Main/Loader/Loader';
@@ -85,91 +85,101 @@ const UpdateProfile = () => {
   return (
     <Fragment>
       <Navbar />
-      <h1 className="update">Update Profile</h1>
-      <div className="updateMainProfile">
-        <div className="updateProfile">
-          <form
-            className="updateProfileForm"
-            encType="multipart/form-data"
-            onSubmit={updateProfileSubmit}
-          >
-            <div id="updateProfileImage">
-              <img src={avatarPreview} alt="Avatar Preview" />
-              <input
-                type="file"
-                name="avatar"
-                accept="image/*"
-                onChange={updateProfileDataChange}
-              />
-            </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <Fragment>
+          <h1 className="update">Update Profile</h1>
+          <div className="updateMainProfile">
+            <div className="updateProfile">
+              <form
+                className="updateProfileForm"
+                encType="multipart/form-data"
+                onSubmit={updateProfileSubmit}
+              >
+                <div id="updateProfileImage">
+                  <img src={avatarPreview} alt="Avatar Preview" />
+                  <input
+                    type="file"
+                    name="avatar"
+                    accept="image/*"
+                    onChange={updateProfileDataChange}
+                  />
+                </div>
 
-            <span className="aDetails"> Edit Details </span>
-            <div className="updateProfileFirstName">
-              {/* <FaceIcon /> */}
-              <input
-                type="text"
-                placeholder="First Name"
-                name="firstName"
-                value={firstName}
-                required
-                className="input"
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-            <div className="updateProfileLastName">
-              {/* <FaceIcon /> */}
-              <input
-                type="text"
-                placeholder="Last Name"
-                name="lastName"
-                value={lastName}
-                required
-                className="input"
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </div>
-            <div className="updateProfileEmail">
-              {/* <MailOutlineIcon /> */}
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                value={email}
-                required
-                readOnly
-                className="input"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="updateProfileNumber">
-              {/* <PhoneIcon /> */}
-              <input
-                type="number"
-                placeholder="Contact"
-                name="contact"
-                value={contact}
-                required
-                className="input"
-                onChange={(e) => setContact(e.target.value)}
-              />
-            </div>
-            <div className="updateProfileAddress">
-              {/* <BusinessIcon /> */}
-              <input
-                type="text"
-                placeholder="Address"
-                name="address"
-                value={address}
-                required
-                className="input"
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </div>
+                <span className="aDetails"> Edit Details </span>
+                <div className="updateProfileFirstName">
+                  <FaceIcon />
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    name="firstName"
+                    value={firstName}
+                    required
+                    className="input"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="updateProfileLastName">
+                  <FaceIcon />
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    name="lastName"
+                    value={lastName}
+                    required
+                    className="input"
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </div>
+                <div className="updateProfileEmail">
+                  <MailOutlineIcon />
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    value={email}
+                    required
+                    readOnly
+                    className="input"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div className="updateProfileNumber">
+                  <PhoneIcon />
+                  <input
+                    type="number"
+                    placeholder="Contact"
+                    name="contact"
+                    value={contact}
+                    required
+                    className="input"
+                    onChange={(e) => setContact(e.target.value)}
+                  />
+                </div>
+                <div className="updateProfileAddress">
+                  <BusinessIcon />
+                  <input
+                    type="text"
+                    placeholder="Address"
+                    name="address"
+                    value={address}
+                    required
+                    className="input"
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </div>
 
-            <input type="submit" value="Update" className="updateProfileBtn" />
-          </form>
-        </div>
-      </div>
+                <input
+                  type="submit"
+                  value="Update"
+                  className="updateProfileBtn"
+                />
+              </form>
+            </div>
+          </div>
+        </Fragment>
+      )}
     </Fragment>
   );
 };
