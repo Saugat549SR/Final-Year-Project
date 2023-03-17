@@ -2,7 +2,6 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import Index from './components/Main/Index';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import ForgotPassword from './components/ForgotPassword';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ProductDetails } from './components/Main/Products/ProductDetails';
 import Dashboard from './components/admin/Dashboard';
@@ -16,6 +15,8 @@ import store from './store';
 import { loadUser } from './actions/userAction';
 import React from 'react';
 import ProtectedRoute from './components/Route/ProtectedRoute';
+import ForgotPassword from './components/User/ForgotPassword';
+import ResetPassword from './components/User/ResetPassword';
 
 function App() {
   React.useEffect(() => {
@@ -29,7 +30,7 @@ function App() {
         <Route path="/signup" exact element={<Signup />} />
         <Route path="/login" exact element={<Login />} />
         <Route path="/" element={<Navigate replace to="/login" />} />
-        <Route path="/forgot-password" exact element={<ForgotPassword />} />
+
         <Route path="/product/:id" exact element={<ProductDetails />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/admin/dashboard" exact element={<Dashboard />} />
@@ -39,6 +40,12 @@ function App() {
           <Route path="/me/update" exact element={<UpdateProfile />} />
           <Route path="/password/update" exact element={<UpdatePassword />} />
         </Route>
+        <Route path="/password/forgot" exact element={<ForgotPassword />} />
+        <Route
+          path="/password/reset/:token"
+          exact
+          element={<ResetPassword />}
+        />
         <Route path="/cart" exact element={<Cart />} />
       </Routes>
     </Router>

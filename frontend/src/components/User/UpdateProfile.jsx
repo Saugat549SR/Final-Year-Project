@@ -39,10 +39,6 @@ const UpdateProfile = () => {
       myForm.set('avatar', avatar);
     }
     dispatch(updateProfile(myForm));
-
-    // for (let key of myForm.keys()) {
-    //   console.log(key + ': ' + myForm.get(key));
-    // }
   };
 
   const updateProfileDataChange = (e) => {
