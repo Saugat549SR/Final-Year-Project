@@ -31,6 +31,12 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, 'please Enter product category'],
   },
+  Stock: {
+    type: Number,
+    required: [true, 'Please Enter product Stock'],
+    maxLength: [1, 'Stock cannot exceed 1 characters'],
+    default: 1,
+  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',

@@ -5,12 +5,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getProductDetails } from '../../../actions/productAction';
 import { useParams } from 'react-router-dom';
 import { addItemsToCart } from '../../../actions/cartAction';
+import { Navbar } from '../Homepage/Navbar';
 export const ProductDetails = () => {
   const dispatch = useDispatch();
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
   );
   const params = useParams();
+
   useEffect(() => {
     dispatch(getProductDetails(params.id));
   }, [dispatch, params.id]);
@@ -22,31 +24,33 @@ export const ProductDetails = () => {
 
   return (
     <Fragment>
-      <div className="ProductDetails">
-        <Carousel>
-          {product.images &&
-            product.images.map((item, i) => (
-              <img
-                className="CarouselImage"
-                key={item.url}
-                src={item.url}
-                alt={`${i} Slide`}
-              />
-            ))}
-        </Carousel>
-
-        <div>
-          <div className="detailsBlock-1">
-            <h2>{product.name}</h2>
-            <p>Product # {product._id}</p>
+      <Navbar />
+      <div className="single-product-main-content">
+        <div className="single-product-page">
+          <div className="left">
+            <Carousel>
+              {product.images &&
+                product.images.map((item, i) => (
+                  <img
+                    key={item.url}
+                    className="carousel-image"
+                    src={item.url}
+                    alt={`${i} Slide`}
+                  />
+                ))}
+            </Carousel>
           </div>
-          <div className="detailsBlock-3">
-            <h1>{`Rs ${product.price}`}</h1>
 
-            <button onClick={addToCartHandler}>Add to Cart</button>
-          </div>
-          <div className="detailsBlock-4">
-            Description: <p>{product.description}</p>
+          <div className="right">
+            <h1 className="product-title">{product.name}</h1>
+            <h2 className="product-price">{`Rs ${product.price}`}</h2>
+            <p className="product-description">{product.description}</p>
+
+            <div className="cart-buttons">
+              <button className="add-to-cart-button" onClick={addToCartHandler}>
+                ADD TO CART
+              </button>
+            </div>
           </div>
         </div>
       </div>

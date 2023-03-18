@@ -5,7 +5,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import './ResetPassword.css';
 import { useSelector, useDispatch } from 'react-redux';
 import Loader from '../Main/Loader/Loader';
-import { Navbar } from '../Main/Homepage/Navbar';
+
 import { useAlert } from 'react-alert';
 import { clearErrors, resetPassword } from '../../actions/userAction';
 
@@ -47,7 +47,6 @@ const ResetPassword = () => {
   }, [dispatch, error, alert, success, navigate]);
   return (
     <Fragment>
-      <Navbar />
       {loading ? (
         <Loader />
       ) : (
