@@ -122,19 +122,19 @@ const sliderItems = [
   {
     id: 1,
     title: 'BUY',
-    img: 'https://cdn.enepsters.com/wp-content/uploads/2020/09/ktm-duke-200-2020-1.jpg',
+    img: 'https://www.freepnglogos.com/uploads/bike-png/edit-bike-png-download-motor-bike-png-download-5.png',
     desc: 'Ride better',
   },
   {
     id: 2,
     title: 'SELL',
-    img: 'https://www.pngitem.com/pimgs/m/478-4787859_supreme-honda-dirt-bike-hd-png-download.png',
+    img: 'https://www.freepnglogos.com/uploads/bike-png/ducati-monster-red-motorcycle-bike-png-image-pngpix-36.png',
     desc: 'Ride better',
   },
   {
     id: 3,
     title: 'RENT',
-    img: 'https://cdp.azureedge.net/products/USA/HD/2022/MC/SOFTAIL/HERITAGE_CLASSIC_114/50/BLACK_CHROME_TRIM_OPTION_-_LACE_WHEEL_OPTIONS/2000000001.jpg',
+    img: 'https://www.freepnglogos.com/uploads/bike-png/red-bajaj-pulsar-motorcycle-bike-png-image-pngpix-35.png',
     desc: 'Ride better',
   },
 ];

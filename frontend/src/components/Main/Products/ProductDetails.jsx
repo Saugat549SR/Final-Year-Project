@@ -6,8 +6,10 @@ import { getProductDetails } from '../../../actions/productAction';
 import { useParams } from 'react-router-dom';
 import { addItemsToCart } from '../../../actions/cartAction';
 import { Navbar } from '../Homepage/Navbar';
+import { useAlert } from 'react-alert';
 export const ProductDetails = () => {
   const dispatch = useDispatch();
+  const alert = useAlert();
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
   );
