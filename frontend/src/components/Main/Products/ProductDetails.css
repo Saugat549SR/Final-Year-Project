@@ -89,6 +89,13 @@
   background-color: #8c0c3f;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
 }
+.redColor {
+  color: red;
+}
+
+.greenColor {
+  color: rgb(57, 176, 57);
+}
 /* For screens smaller than 576px (i.e., mobile devices) */
 @media (max-width: 575px) {
   .single-product-page {

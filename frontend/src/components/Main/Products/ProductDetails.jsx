@@ -45,6 +45,12 @@ export const ProductDetails = () => {
             <h1 className="product-title">{product.name}</h1>
             <h2 className="product-price">{`Rs ${product.price}`}</h2>
             <p className="product-description">{product.description}</p>
+            <p>
+              Status:
+              <b className={product.stock < 1 ? 'redColor' : 'greenColor'}>
+                {product.stock < 1 ? 'OutOfStock' : 'InStock'}
+              </b>
+            </p>
 
             <div className="cart-buttons">
               <button className="add-to-cart-button" onClick={addToCartHandler}>

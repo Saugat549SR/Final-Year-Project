@@ -20,6 +20,7 @@ const NewProduct = ({ history }) => {
   const { loading, error, success } = useSelector((state) => state.newProduct);
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
+  const [stock, setStock] = useState(1);
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [images, setImages] = useState([]);
@@ -55,6 +56,8 @@ const NewProduct = ({ history }) => {
 
     myForm.set('name', name);
     myForm.set('price', price);
+    myForm.set('stock', stock);
+
     myForm.set('description', description);
     myForm.set('category', category);
     console.log(images);
@@ -118,6 +121,17 @@ const NewProduct = ({ history }) => {
                 required
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+            <div>
+              <AttachMoneyIcon />
+              <input
+                type="number"
+                placeholder="Stock"
+                required
+                readOnly
+                value={stock}
+                onChange={(e) => setStock(e.target.value)}
               />
             </div>
             <div>
