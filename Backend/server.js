@@ -8,6 +8,7 @@ const connection = require('./database');
 const userRoutes = require('./routes/userRoute');
 const dotenv = require('dotenv');
 const product = require('./routes/productRoute');
+const rent = require('./routes/rentRoute');
 const order = require('./routes/orderRoute');
 const errorMiddleware = require('./middleware/error');
 const cookieParser = require('cookie-parser');
@@ -38,6 +39,7 @@ app.use('/api/users', userRoutes);
 
 app.use('/api/v1', product);
 app.use('/api/v1', order);
+app.use('/api/v1', rent);
 
 const port = process.env.PORT || 8080;
 const server = app.listen(port, () =>

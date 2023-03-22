@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
+import { Navbar } from '../Homepage/Navbar';
 
 export const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ export const ProductsPage = () => {
 
   return (
     <Fragment>
+      <Navbar />
       {loading ? (
         <Loader />
       ) : (
