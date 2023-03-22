@@ -4,6 +4,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ProductDetails } from './components/Main/Products/ProductDetails';
+import { ProductsPage } from './components/Main/Products/ProductsPage';
 import Dashboard from './components/admin/Dashboard';
 import ProductList from './components/admin/ProductList';
 import NewProduct from './components/admin/NewProduct';
@@ -32,6 +33,8 @@ function App() {
         <Route path="/" element={<Navigate replace to="/login" />} />
 
         <Route path="/product/:id" exact element={<ProductDetails />} />
+        <Route path="/products" exact element={<ProductsPage />} />
+        {/* <Route path="/products/:keyword" exact element={<ProductsPage />} /> */}
         <Route element={<ProtectedRoute />}>
           <Route path="/admin/dashboard" exact element={<Dashboard />} />
           <Route path="/admin/products" exact element={<ProductList />} />

@@ -1,3 +1,23 @@
+.view {
+  display: grid;
+  justify-content: center;
+}
+.view a {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #007bff;
+  text-decoration: none;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.7s ease;
+}
+.view a:hover {
+  background-color: #007bff;
+  color: #fff;
+}
 .homeHeading {
   text-align: center;
   font-family: Roboto;
@@ -36,6 +56,11 @@
   font-size: 1.2vmax;
   margin: 1vmax 0.5vmax;
   margin-bottom: 0;
+}
+.spec {
+  display: grid;
+  grid-template-columns: 4fr 1.5fr;
+  font-size: 13px;
 }
 
 .productCard > span {

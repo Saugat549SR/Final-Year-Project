@@ -6,7 +6,6 @@ import { addItemsToCart, removeItemsFromCart } from '../../actions/cartAction';
 import { Typography } from '@material-ui/core';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import { Link } from 'react-router-dom';
-import { Navbar } from '../Main/Homepage/Navbar';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -25,11 +24,9 @@ const Cart = () => {
         </div>
       ) : (
         <Fragment>
-          <Navbar />
           <div className="cartPage">
             <div className="cartHeader">
               <p>Product</p>
-
               <p>Subtotal</p>
             </div>
             <div className="carts">

@@ -12,12 +12,16 @@ import {
   NEW_PRODUCT_SUCCESS,
   NEW_PRODUCT_RESET,
   NEW_PRODUCT_FAIL,
+  ALL_PRODUCT_REQUEST_HOME,
+  ALL_PRODUCT_SUCCESS_HOME,
+  ALL_PRODUCT_FAIL_HOME,
   CLEAR_ERRORS,
 } from '../constants/productConstants';
 
 export const productReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case ALL_PRODUCT_REQUEST:
+    case ALL_PRODUCT_REQUEST_HOME:
     case ADMIN_PRODUCT_REQUEST:
       return {
         loading: true,
@@ -25,10 +29,13 @@ export const productReducer = (state = { products: [] }, action) => {
       };
 
     case ALL_PRODUCT_SUCCESS:
+    case ALL_PRODUCT_SUCCESS_HOME:
       return {
         loading: false,
         products: action.payload.products,
         productsCount: action.payload.productsCount,
+        resultPerPage: action.payload.resultPerPage,
+        filteredProductsCount: action.payload.filteredProductsCount,
       };
 
     case ADMIN_PRODUCT_SUCCESS:
@@ -38,6 +45,7 @@ export const productReducer = (state = { products: [] }, action) => {
       };
 
     case ALL_PRODUCT_FAIL:
+    case ALL_PRODUCT_FAIL_HOME:
     case ADMIN_PRODUCT_FAIL:
       return {
         loading: false,

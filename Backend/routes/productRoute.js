@@ -6,6 +6,7 @@ const {
   deleteProduct,
   getProductDetails,
   getAdminProducts,
+  getAllProductsHome,
 } = require('../controllers/productController');
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
 const router = express.Router();
@@ -21,6 +22,7 @@ const upload = multer({
 });
 
 router.route('/products').get(getAllProducts);
+router.route('/product').get(getAllProductsHome);
 
 router.route('/admin/products').get(getAdminProducts);
 

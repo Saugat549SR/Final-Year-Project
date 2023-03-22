@@ -55,9 +55,18 @@ const Text = styled('div')`
 `;
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [keyword, setKeyword] = useState('');
   const dispatch = useDispatch();
   const alert = useAlert();
   const { user, loading } = useSelector((state) => state.user);
+  const searchSubmitHandler = (e) => {
+    e.preventDefault();
+    if (keyword.trim()) {
+      navigate(`/products/${keyword}`);
+    } else {
+      navigate('/products');
+    }
+  };
   const logoutHand = () => {
     dispatch(logout());
     alert.success('Logged out Successfully');
@@ -75,8 +84,11 @@ export const Navbar = () => {
           BIKE BARN
         </Text>
         <TwoWheelerTwoToneIcon sx={{ display: { xs: 'block', sm: 'none' } }} />
-        <Search>
-          <InputBase placeholder="search" />
+        <Search onSubmit={searchSubmitHandler}>
+          <InputBase
+            placeholder="search"
+            onChange={(e) => setKeyword(e.target.value)}
+          />
         </Search>
         <Icons>
           <Badge>

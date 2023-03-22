@@ -4,7 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { clearErrors, createProduct } from '../../actions/productAction';
 import { useAlert } from 'react-alert';
 import { Button } from '@material-ui/core';
-
+import InventoryIcon from '@mui/icons-material/Inventory';
+import BoltIcon from '@mui/icons-material/Bolt';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import DescriptionIcon from '@material-ui/icons/Description';
 import SpellcheckIcon from '@material-ui/icons/Spellcheck';
@@ -22,6 +24,8 @@ const NewProduct = ({ history }) => {
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(1);
   const [description, setDescription] = useState('');
+  const [Kilometer, setKilometer] = useState('');
+  const [power, setPower] = useState('');
   const [category, setCategory] = useState('');
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
@@ -57,8 +61,9 @@ const NewProduct = ({ history }) => {
     myForm.set('name', name);
     myForm.set('price', price);
     myForm.set('stock', stock);
-
     myForm.set('description', description);
+    myForm.set('kilometer', Kilometer);
+    myForm.set('power', power);
     myForm.set('category', category);
     console.log(images);
     images.forEach((image) => {
@@ -124,7 +129,7 @@ const NewProduct = ({ history }) => {
               />
             </div>
             <div>
-              <AttachMoneyIcon />
+              <InventoryIcon />
               <input
                 type="number"
                 placeholder="Stock"
@@ -134,6 +139,27 @@ const NewProduct = ({ history }) => {
                 onChange={(e) => setStock(e.target.value)}
               />
             </div>
+            <div>
+              <AccessTimeIcon />
+              <input
+                type="number"
+                placeholder="Kilometers Done"
+                required
+                value={Kilometer}
+                onChange={(e) => setKilometer(e.target.value)}
+              />
+            </div>
+            <div>
+              <BoltIcon />
+              <input
+                type="number"
+                placeholder="CC"
+                required
+                value={power}
+                onChange={(e) => setPower(e.target.value)}
+              />
+            </div>
+
             <div>
               <AccountTreeIcon />
               <select onChange={(e) => setCategory(e.target.value)}>
@@ -145,6 +171,7 @@ const NewProduct = ({ history }) => {
                 ))}
               </select>
             </div>
+
             <div id="createProductFormFile">
               <input
                 type="file"

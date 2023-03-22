@@ -5,11 +5,12 @@ import Footer from './Homepage/Footer';
 import Product from './Products/Product';
 import '../Main/Products/product.css';
 import MetaData from './Products/MetaData';
-import { getProduct } from '../../actions/productAction';
+import { getProductHome } from '../../actions/productAction';
 import { useSelector, useDispatch } from 'react-redux';
 import { Fragment, useEffect } from 'react';
 import Loader from './Loader/Loader';
 import { useAlert } from 'react-alert';
+import { Link } from 'react-router-dom';
 
 const Main = () => {
   const alert = useAlert();
@@ -22,7 +23,7 @@ const Main = () => {
     if (error) {
       return alert.error(error);
     }
-    dispatch(getProduct());
+    dispatch(getProductHome());
   }, [dispatch, error, alert]);
 
   return (
@@ -41,6 +42,10 @@ const Main = () => {
                 <Product product={product} key={index} />
               ))}
           </div>
+          <div className="view">
+            <Link to="/products">View Products</Link>
+          </div>
+
           <Footer />
         </Box>
       )}

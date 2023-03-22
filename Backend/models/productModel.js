@@ -10,6 +10,14 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please Enter product Description'],
   },
+  kilometer: {
+    type: Number,
+    required: [true, 'Please Enter Kilometer'],
+  },
+  power: {
+    type: Number,
+    required: [true, 'Please Enter cc'],
+  },
   price: {
     type: Number,
     required: [true, 'Please Enter product Price'],
