@@ -34,10 +34,10 @@ router.route('/rent').get(getAllRentProductsHome);
 
 router.route('/admin/rent/products').get(getAdminRentProducts);
 
-router.route('/rent/product/:id').get(getRentProductDetails);
+router.route('/rent/:id').get(getRentProductDetails);
 
 router
-  .route('/admin/rent/product/:id')
+  .route('/admin/rent/:id')
   .put(updateRentProduct)
   .delete(deleteRentProduct);
 

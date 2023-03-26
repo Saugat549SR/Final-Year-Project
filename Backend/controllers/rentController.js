@@ -46,7 +46,7 @@ exports.createRentProduct = catchAsyncErrors(async (req, res, next) => {
 // Get All  Rent Products --Home page
 exports.getAllRentProductsHome = catchAsyncErrors(async (req, res) => {
   const resultPerPage = 4;
-  const RentCount = await Rent.countDocuments();
+  const rentsCount = await Rent.countDocuments();
   const apiFeatures = new ApiFeatures(Rent.find(), req.query)
     .search()
     .filter()
@@ -57,14 +57,14 @@ exports.getAllRentProductsHome = catchAsyncErrors(async (req, res) => {
     success: true,
     rents,
     resultPerPage,
-    RentCount,
+    rentsCount,
   });
 });
 
 // Get All  Rent Products
 exports.getAllRentProducts = catchAsyncErrors(async (req, res) => {
   const resultPerPage = 4;
-  const RentCount = await Rent.countDocuments();
+  const rentsCount = await Rent.countDocuments();
   const apiFeatures = new ApiFeatures(Rent.find(), req.query)
     .search()
     .filter()
@@ -75,7 +75,7 @@ exports.getAllRentProducts = catchAsyncErrors(async (req, res) => {
     success: true,
     rents,
     resultPerPage,
-    RentCount,
+    rentsCount,
   });
 });
 

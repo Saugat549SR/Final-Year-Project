@@ -12,6 +12,7 @@ import {
   userReducer,
 } from './reducers/userReducer';
 import { cartReducer } from './reducers/cartReducer';
+import { rentReducer } from './reducers/rentReducer';
 
 const reducer = combineReducers({
   products: productReducer,
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   cart: cartReducer,
   profile: profileReducer,
   forgotPassword: forgotPasswordReducer,
+  rents: rentReducer,
 });
 let initialState = {
   cart: {

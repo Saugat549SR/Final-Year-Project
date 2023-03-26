@@ -1,0 +1,5 @@
+export const ALL_RENT_REQUEST = 'ALL_RENT_REQUEST';
+export const ALL_RENT_SUCCESS = 'ALL_RENT_SUCCESS';
+export const ALL_RENT_FAIL = 'ALL_RENT_FAIL';
+
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
