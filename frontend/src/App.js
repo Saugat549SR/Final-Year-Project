@@ -19,6 +19,7 @@ import ProtectedRoute from './components/Route/ProtectedRoute';
 import ForgotPassword from './components/User/ForgotPassword';
 import ResetPassword from './components/User/ResetPassword';
 import { RentDetails } from './components/Main/Rents/RentDetails';
+import { RentsPage } from './components/Main/Rents/RentsPage';
 
 function App() {
   React.useEffect(() => {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/product/:id" exact element={<ProductDetails />} />
         <Route path="/rent/:id" exact element={<RentDetails />} />
         <Route path="/products" exact element={<ProductsPage />} />
+        <Route path="/rents" exact element={<RentsPage />} />
         {/* <Route path="/products/:keyword" exact element={<ProductsPage />} /> */}
         <Route element={<ProtectedRoute />}>
           <Route path="/admin/dashboard" exact element={<Dashboard />} />

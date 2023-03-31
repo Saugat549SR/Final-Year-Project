@@ -2,6 +2,9 @@ import {
   ALL_RENT_REQUEST,
   ALL_RENT_SUCCESS,
   ALL_RENT_FAIL,
+  ALL_RENT_REQUEST_HOME,
+  ALL_RENT_SUCCESS_HOME,
+  ALL_RENT_FAIL_HOME,
   CLEAR_ERRORS,
   RENT_DETAILS_REQUEST,
   RENT_DETAILS_SUCCESS,
@@ -11,12 +14,14 @@ import {
 export const rentReducer = (state = { rents: [] }, action) => {
   switch (action.type) {
     case ALL_RENT_REQUEST:
+    case ALL_RENT_REQUEST_HOME:
       return {
         loading: true,
         rents: [],
       };
 
     case ALL_RENT_SUCCESS:
+    case ALL_RENT_SUCCESS_HOME:
       return {
         loading: false,
         rents: action.payload.rents,
@@ -24,6 +29,7 @@ export const rentReducer = (state = { rents: [] }, action) => {
       };
 
     case ALL_RENT_FAIL:
+    case ALL_RENT_FAIL_HOME:
       return {
         loading: false,
         error: action.payload,

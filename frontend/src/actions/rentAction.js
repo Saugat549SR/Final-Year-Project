@@ -3,27 +3,54 @@ import {
   ALL_RENT_REQUEST,
   ALL_RENT_SUCCESS,
   ALL_RENT_FAIL,
+  ALL_RENT_REQUEST_HOME,
+  ALL_RENT_SUCCESS_HOME,
+  ALL_RENT_FAIL_HOME,
   RENT_DETAILS_REQUEST,
   RENT_DETAILS_SUCCESS,
   RENT_DETAILS_FAIL,
   CLEAR_ERRORS,
 } from '../constants/rentConstants';
 
-// get all product --products
-export const getRentProduct = () => async (dispatch) => {
+// get all rent --products
+export const getRentProduct =
+  (keyword = '', currentPage = 1, price = [0, 200000]) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: ALL_RENT_REQUEST,
+      });
+      const { data } = await axios.get(
+        `/api/v1/rents?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`
+      );
+
+      dispatch({
+        type: ALL_RENT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ALL_RENT_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+// get all rent product -- home
+export const getRentProductHome = () => async (dispatch) => {
   try {
     dispatch({
-      type: ALL_RENT_REQUEST,
+      type: ALL_RENT_REQUEST_HOME,
     });
-    const { data } = await axios.get('/api/v1/rents');
+    const { data } = await axios.get('/api/v1/rent');
 
     dispatch({
-      type: ALL_RENT_SUCCESS,
+      type: ALL_RENT_SUCCESS_HOME,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: ALL_RENT_FAIL,
+      type: ALL_RENT_FAIL_HOME,
       payload: error.response.data.message,
     });
   }

@@ -6,7 +6,7 @@ import Product from './Products/Product';
 import Rent from './Rents/Rent';
 import MetaData from './Products/MetaData';
 import { getProductHome } from '../../actions/productAction';
-import { getRentProduct } from '../../actions/rentAction';
+import { getRentProductHome } from '../../actions/rentAction';
 import './Index.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { Fragment, useEffect, useRef } from 'react';
@@ -53,7 +53,7 @@ const Main = () => {
     if (error) {
       return alert.error(error);
     }
-    dispatch(getRentProduct());
+    dispatch(getRentProductHome());
   }, [dispatch, error, alert]);
 
   return (
