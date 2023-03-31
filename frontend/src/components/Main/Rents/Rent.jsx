@@ -9,7 +9,7 @@ const Product = ({ rent }) => {
     <Link className="rentCard" to={`/rent/${rent._id}`}>
       <img src={rent.images[0].url} alt={rent.name} />
       <p>{rent.name}</p>
-      <span>{`Rs.${rent.price}`}</span>
+      <span>{`Rs.${rent.price}`} per/hr</span>
       <div className="spec">
         <AccessTimeIcon />
         <BoltIcon />

@@ -18,6 +18,7 @@ import React from 'react';
 import ProtectedRoute from './components/Route/ProtectedRoute';
 import ForgotPassword from './components/User/ForgotPassword';
 import ResetPassword from './components/User/ResetPassword';
+import { RentDetails } from './components/Main/Rents/RentDetails';
 
 function App() {
   React.useEffect(() => {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/" element={<Navigate replace to="/login" />} />
 
         <Route path="/product/:id" exact element={<ProductDetails />} />
+        <Route path="/rent/:id" exact element={<RentDetails />} />
         <Route path="/products" exact element={<ProductsPage />} />
         {/* <Route path="/products/:keyword" exact element={<ProductsPage />} /> */}
         <Route element={<ProtectedRoute />}>

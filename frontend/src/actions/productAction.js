@@ -103,6 +103,7 @@ export const createProduct = (productData) => async (dispatch) => {
   }
 };
 
+//product details
 export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({
