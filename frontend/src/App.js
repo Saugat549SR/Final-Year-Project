@@ -8,6 +8,7 @@ import { ProductsPage } from './components/Main/Products/ProductsPage';
 import Dashboard from './components/admin/Dashboard';
 import ProductList from './components/admin/ProductList';
 import NewProduct from './components/admin/NewProduct';
+import UpdateProduct from './components/admin/UpdateProduct';
 import Profile from './components/User/profile';
 import UpdateProfile from './components/User/UpdateProfile';
 import UpdatePassword from './components/User/UpdatePassword';
@@ -20,6 +21,8 @@ import ForgotPassword from './components/User/ForgotPassword';
 import ResetPassword from './components/User/ResetPassword';
 import { RentDetails } from './components/Main/Rents/RentDetails';
 import { RentsPage } from './components/Main/Rents/RentsPage';
+import Shipping from './components/Cart/Shipping';
+import OrderDetails from './components/Cart/OrderDetails';
 
 function App() {
   React.useEffect(() => {
@@ -43,9 +46,12 @@ function App() {
           <Route path="/admin/dashboard" exact element={<Dashboard />} />
           <Route path="/admin/products" exact element={<ProductList />} />
           <Route path="/admin/product" exact element={<NewProduct />} />
+          <Route path="/admin/product/:id" exact element={<UpdateProduct />} />
           <Route path="/account" exact element={<Profile />} />
           <Route path="/me/update" exact element={<UpdateProfile />} />
           <Route path="/password/update" exact element={<UpdatePassword />} />
+          <Route path="/shipping" exact element={<Shipping />} />
+          <Route path="/order/details" exact element={<OrderDetails />} />
         </Route>
         <Route path="/password/forgot" exact element={<ForgotPassword />} />
         <Route

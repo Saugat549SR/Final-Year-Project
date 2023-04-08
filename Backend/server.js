@@ -10,6 +10,7 @@ const dotenv = require('dotenv');
 const product = require('./routes/productRoute');
 const rent = require('./routes/rentRoute');
 const order = require('./routes/orderRoute');
+const category = require('./routes/categoryRoute');
 const errorMiddleware = require('./middleware/error');
 const cookieParser = require('cookie-parser');
 //const bodyParser = require('body-parser');
@@ -40,6 +41,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/v1', product);
 app.use('/api/v1', order);
 app.use('/api/v1', rent);
+app.use('/api/v1', category);
 
 const port = process.env.PORT || 8080;
 const server = app.listen(port, () =>

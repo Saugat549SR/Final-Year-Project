@@ -13,7 +13,7 @@ import { Navbar } from '../Homepage/Navbar';
 export const ProductsPage = () => {
   const dispatch = useDispatch();
   const [currentPage, setcurrentPage] = useState(1);
-  const [price, setPrice] = useState([0, 200000]);
+  const [price, setPrice] = useState([0, 6000000]);
   const params = useParams();
   const {
     products,
@@ -58,7 +58,7 @@ export const ProductsPage = () => {
               valueLabelDisplay="auto"
               aria-labelledby="range-slider"
               min={0}
-              max={200000}
+              max={6000000}
             />
           </div>
 

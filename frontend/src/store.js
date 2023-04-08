@@ -5,6 +5,7 @@ import {
   newProductReducer,
   productDetailsReducer,
   productReducer,
+  DeleteProductReducer,
 } from './reducers/productReducer';
 import {
   forgotPasswordReducer,
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   products: productReducer,
   productDetails: productDetailsReducer,
   newProduct: newProductReducer,
+  deleteProduct: DeleteProductReducer,
   user: userReducer,
   cart: cartReducer,
   profile: profileReducer,
@@ -30,6 +32,9 @@ let initialState = {
     cartItems: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [],
+    shippingInfo: localStorage.getItem('shippingInfo')
+      ? JSON.parse(localStorage.getItem('shippingInfo'))
+      : {},
   },
 };
 

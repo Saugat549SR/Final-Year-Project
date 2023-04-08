@@ -35,7 +35,9 @@ router
     createProduct
   );
 
-router.route('/admin/product/:id').put(updateProduct).delete(deleteProduct);
+router.route('/admin/product/:id').put(upload.array('images'), updateProduct);
+
+router.route('/admin/product/:id').delete(deleteProduct);
 
 router.route('/product/:id').get(getProductDetails);
 
