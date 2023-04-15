@@ -31,7 +31,14 @@ const Shipping = () => {
       return;
     }
     dispatch(
-      saveShippingInfo({ firstName, address, city, contact, shippingInfo })
+      saveShippingInfo({
+        firstName,
+        address,
+        city,
+        contact,
+        province,
+        shippingInfo,
+      })
     );
     navigate('/order/details');
   };

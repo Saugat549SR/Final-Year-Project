@@ -5,15 +5,18 @@ import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAdminProduct } from '../../actions/productAction';
+import { getAllOrders } from '../../actions/orderAction';
 import { Navbar } from '../Main/Homepage/Navbar';
 //import { Doughnut, Line } from 'react-chartjs-2';
 const Dashboard = () => {
   const dispatch = useDispatch();
 
   const { products } = useSelector((state) => state.products);
+  const { orders } = useSelector((state) => state.allOrders);
 
   useEffect(() => {
     dispatch(getAdminProduct());
+    dispatch(getAllOrders());
   }, [dispatch]);
 
   // const lineState = {
@@ -48,7 +51,7 @@ const Dashboard = () => {
 
               <Link to="/admin/orders">
                 <p>Orders</p>
-                <p>4</p>
+                <p>{orders && orders.length}</p>
               </Link>
 
               <Link to="/admin/users">

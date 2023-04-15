@@ -1,6 +1,6 @@
 require('dotenv').config();
 const cloudinary = require('cloudinary');
-const fileUpload = require('express-fileupload');
+
 const express = require('express');
 const app = express();
 const cors = require('cors');

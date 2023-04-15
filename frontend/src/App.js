@@ -23,6 +23,9 @@ import { RentDetails } from './components/Main/Rents/RentDetails';
 import { RentsPage } from './components/Main/Rents/RentsPage';
 import Shipping from './components/Cart/Shipping';
 import OrderDetails from './components/Cart/OrderDetails';
+import { OrderList } from './components/admin/OrderList';
+import { ProcessOrder } from './components/admin/ProcessOrder';
+import { CreateCategory } from './components/admin/CreateCategory';
 
 function App() {
   React.useEffect(() => {
@@ -47,11 +50,18 @@ function App() {
           <Route path="/admin/products" exact element={<ProductList />} />
           <Route path="/admin/product" exact element={<NewProduct />} />
           <Route path="/admin/product/:id" exact element={<UpdateProduct />} />
+          <Route path="/admin/orders" exact element={<OrderList />} />
+          <Route path="/admin/order/:id" exact element={<ProcessOrder />} />
           <Route path="/account" exact element={<Profile />} />
           <Route path="/me/update" exact element={<UpdateProfile />} />
           <Route path="/password/update" exact element={<UpdatePassword />} />
           <Route path="/shipping" exact element={<Shipping />} />
           <Route path="/order/details" exact element={<OrderDetails />} />
+          <Route
+            path="/admin/create/category"
+            exact
+            element={<CreateCategory />}
+          />
         </Route>
         <Route path="/password/forgot" exact element={<ForgotPassword />} />
         <Route

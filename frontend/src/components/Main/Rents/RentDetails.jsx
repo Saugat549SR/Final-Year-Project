@@ -3,27 +3,27 @@ import Carousel from 'react-material-ui-carousel';
 import './RentDetails.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRentDetails } from '../../../actions/rentAction';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Navbar } from '../Homepage/Navbar';
 import { useAlert } from 'react-alert';
 import { DatePicker } from 'antd';
-import moment from 'moment';
 import { DateTime } from 'luxon';
 const { RangePicker } = DatePicker;
 export const RentDetails = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const alert = useAlert();
   const { rent, loading, error } = useSelector((state) => state.rentDetails);
   const params = useParams();
   const [from, setFrom] = useState();
   const [to, setTo] = useState();
   const [totalDays, setTotalDays] = useState(0);
-
+  const { user } = useSelector((state) => state.user);
   useEffect(() => {
     dispatch(getRentDetails(params.id));
   }, [dispatch, params.id]);
 
-  function selectTimeSlots(values) {
+  const selectTimeSlots = (values) => {
     setFrom(
       DateTime.fromJSDate(values[0].toDate()).toFormat('MMM dd yyyy HH:mm')
     );
@@ -31,7 +31,8 @@ export const RentDetails = () => {
       DateTime.fromJSDate(values[1].toDate()).toFormat('MMM dd yyyy HH:mm')
     );
     setTotalDays(values[1].diff(values[0], 'Days'));
-  }
+  };
+
   return (
     <Fragment>
       <Navbar />
@@ -74,7 +75,12 @@ export const RentDetails = () => {
             </div>
 
             <div className="cart-buttons">
-              <button className="add-to-cart-button">CheckOut</button>
+              <button
+                className="add-to-cart-button"
+                disabled={totalDays ? false : true}
+              >
+                CheckOut
+              </button>
             </div>
           </div>
         </div>

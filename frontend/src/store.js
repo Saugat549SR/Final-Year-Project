@@ -14,6 +14,12 @@ import {
 } from './reducers/userReducer';
 import { cartReducer } from './reducers/cartReducer';
 import { rentDetailsReducer, rentReducer } from './reducers/rentReducer';
+import {
+  allOrderReducer,
+  orderReducer,
+  orderDetailsReducer,
+} from './reducers/orderReducer';
+import { createCategoryReducer } from './reducers/categoryReducer';
 
 const reducer = combineReducers({
   products: productReducer,
@@ -26,6 +32,10 @@ const reducer = combineReducers({
   forgotPassword: forgotPasswordReducer,
   rents: rentReducer,
   rentDetails: rentDetailsReducer,
+  allOrders: allOrderReducer,
+  order: orderReducer,
+  orderDetails: orderDetailsReducer,
+  createCategory: createCategoryReducer,
 });
 let initialState = {
   cart: {

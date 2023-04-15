@@ -1,38 +1,56 @@
 const Category = require('../models/category');
 const ErrorHandler = require('../utils/errorhandler');
 const catchAsyncErrors = require('../middleware/catchAsyncError');
+const slugify = require('slugify');
+const cloudinary = require('cloudinary');
+const DataUriParser = require('datauri/parser.js');
+const path = require('path');
 
-function createCategories(categories, parentId = null) {
-  const categoryList = [];
-  let category;
+const getDataUri = (file) => {
+  const parser = new DataUriParser();
+  const extName = path.extname(file.originalname);
+  const uri = parser.format(extName, file.buffer);
+  return uri;
+};
 
-  if (parentId == null) {
-    category = categories.filter((cat) => cat.parentId == undefined);
-  } else {
-    category = categories.filter((cat) => cat.parentId == parentId);
-  }
-
-  for (let cate of category) {
-    categoryList.push({
-      _id: cate._id,
-      title: cate.title,
-      slug: cate.slug,
-      parentId: cate.parentId,
-    });
-  }
-  return categoryList;
-}
-
-exports.newCategory = catchAsyncErrors(async (req, res, next) => {
+exports.createCategory = catchAsyncErrors(async (req, res, next) => {
   try {
-    const categoryObj = {
-      title: req.body.title,
-    };
+    const image = req.file;
+    console.log(image);
+    if (!image) {
+      console.error('Error: no avatar image provided');
+      return res.status(400).json({ message: 'No avatar image provided' });
+    }
+    const imageData = getDataUri(image);
+    const result = await cloudinary.v2.uploader.upload(imageData.content, {
+      folder: 'category',
+    });
 
-    const cat = new Category(categoryObj);
-    const savedCategory = await cat.save();
-    return res.status(201).json({ category: savedCategory });
+    if (!result) {
+      console.error('Error: failed to upload image to Cloudinary');
+      return res
+        .status(500)
+        .json({ message: 'Error uploading image to Cloudinary' });
+    }
+
+    const { title } = req.body;
+    const slug = slugify(title, { lower: true, remove: /[*+~.()'"!:@]/g });
+
+    const category = new Category({
+      title,
+      slug,
+      image: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+    });
+
+    const resultt = await category.save();
+    res.status(201).json({
+      success: true,
+      category: resultt,
+    });
   } catch (error) {
-    return res.status(400).json({ error });
+    res.status(400).send({ message: error.message });
   }
 });

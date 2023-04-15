@@ -48,6 +48,21 @@ const Sidebar = () => {
           Users
         </p>
       </Link>
+      <Link>
+        <TreeView
+          defaultCollapseIcon={<ExpandMoreIcon />}
+          defaultExpandIcon={<ImportExportIcon />}
+        >
+          <TreeItem nodeId="1" label="Category">
+            <Link to="/admin/category">
+              <TreeItem nodeId="2" label="All" icon={<PostAddIcon />} />
+            </Link>
+            <Link to="/admin/create/category">
+              <TreeItem nodeId="3" label="Create" icon={<AddIcon />} />
+            </Link>
+          </TreeItem>
+        </TreeView>
+      </Link>
     </div>
   );
 };
