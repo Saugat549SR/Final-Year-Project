@@ -9,6 +9,7 @@ import {
   RENT_DETAILS_REQUEST,
   RENT_DETAILS_SUCCESS,
   RENT_DETAILS_FAIL,
+  RENT_SAVE_SHIPPING_INFO,
   CLEAR_ERRORS,
 } from '../constants/rentConstants';
 
@@ -74,6 +75,15 @@ export const getRentDetails = (id) => async (dispatch) => {
       payload: error.response.data.message,
     });
   }
+};
+
+// Save shipping Info
+export const rentSaveShippingInfo = (data) => async (dispatch) => {
+  dispatch({
+    type: RENT_SAVE_SHIPPING_INFO,
+    payload: data,
+  });
+  localStorage.setItem('rentShippingInfo', JSON.stringify(data));
 };
 
 //clearing Erros

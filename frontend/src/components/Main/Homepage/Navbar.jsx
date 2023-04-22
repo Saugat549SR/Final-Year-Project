@@ -55,6 +55,7 @@ const Text = styled('div')`
 `;
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { cartItems } = useSelector((state) => state.cart);
   const [keyword, setKeyword] = useState('');
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -81,7 +82,9 @@ export const Navbar = () => {
           sx={{ display: { xs: 'none', sm: 'block' } }}
           onClick={() => navigate('/')}
         >
-          BIKE BARN
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            BIKE BARN
+          </Link>
         </Text>
         <TwoWheelerTwoToneIcon sx={{ display: { xs: 'block', sm: 'none' } }} />
         <Search onSubmit={searchSubmitHandler}>
@@ -93,7 +96,9 @@ export const Navbar = () => {
         <Icons>
           <Badge>
             <Link to="/cart">
-              <ShoppingCart />
+              <Badge badgeContent={`${cartItems.length}`} color="primary">
+                <ShoppingCart sx={{ fontSize: '25px' }} />
+              </Badge>
             </Link>
           </Badge>
         </Icons>

@@ -3,7 +3,7 @@ import Carousel from 'react-material-ui-carousel';
 import './RentDetails.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRentDetails } from '../../../actions/rentAction';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Navbar } from '../Homepage/Navbar';
 import { useAlert } from 'react-alert';
 import { DatePicker } from 'antd';
@@ -31,6 +31,14 @@ export const RentDetails = () => {
       DateTime.fromJSDate(values[1].toDate()).toFormat('MMM dd yyyy HH:mm')
     );
     setTotalDays(values[1].diff(values[0], 'Days'));
+  };
+  const checkoutHandler = () => {
+    if (user) {
+      navigate('/rent/shipping');
+    } else {
+      // alert.error('Please Login to access this resouces');
+      navigate('/login');
+    }
   };
 
   return (
@@ -77,6 +85,7 @@ export const RentDetails = () => {
             <div className="cart-buttons">
               <button
                 className="add-to-cart-button"
+                onClick={checkoutHandler}
                 disabled={totalDays ? false : true}
               >
                 CheckOut

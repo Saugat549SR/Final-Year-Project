@@ -9,6 +9,7 @@ import {
   RENT_DETAILS_REQUEST,
   RENT_DETAILS_SUCCESS,
   RENT_DETAILS_FAIL,
+  RENT_SAVE_SHIPPING_INFO,
 } from '../constants/rentConstants';
 
 export const rentReducer = (state = { rents: [] }, action) => {
@@ -46,7 +47,10 @@ export const rentReducer = (state = { rents: [] }, action) => {
   }
 };
 
-export const rentDetailsReducer = (state = { rent: {} }, action) => {
+export const rentDetailsReducer = (
+  state = { rent: {}, rentShippingInfo: {} },
+  action
+) => {
   switch (action.type) {
     case RENT_DETAILS_REQUEST:
       return {
@@ -64,6 +68,12 @@ export const rentDetailsReducer = (state = { rent: {} }, action) => {
       return {
         loading: false,
         error: action.payload,
+      };
+
+    case RENT_SAVE_SHIPPING_INFO:
+      return {
+        ...state,
+        rentShippingInfo: action.payload,
       };
 
     case CLEAR_ERRORS:

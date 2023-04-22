@@ -63,7 +63,7 @@ exports.getAllProductsHome = catchAsyncErrors(async (req, res) => {
 
 // Get All Products
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
-  const resultPerPage = 6;
+  const resultPerPage = 2;
   const productsCount = await Product.countDocuments();
   const apiFeatures = new ApiFeatures(Product.find(), req.query)
     .search()

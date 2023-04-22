@@ -23,9 +23,12 @@ import { RentDetails } from './components/Main/Rents/RentDetails';
 import { RentsPage } from './components/Main/Rents/RentsPage';
 import Shipping from './components/Cart/Shipping';
 import OrderDetails from './components/Cart/OrderDetails';
+import { Payment } from './components/Cart/Payment';
 import { OrderList } from './components/admin/OrderList';
 import { ProcessOrder } from './components/admin/ProcessOrder';
 import { CreateCategory } from './components/admin/CreateCategory';
+import RentShipping from './components/Main/Rents/RentShipping';
+import { RentOrderDetails } from './components/Main/Rents/RentOrderDetails';
 
 function App() {
   React.useEffect(() => {
@@ -56,7 +59,10 @@ function App() {
           <Route path="/me/update" exact element={<UpdateProfile />} />
           <Route path="/password/update" exact element={<UpdatePassword />} />
           <Route path="/shipping" exact element={<Shipping />} />
+          <Route path="/rent/shipping" exact element={<RentShipping />} />
+          <Route path="/rent/details" exact element={<RentOrderDetails />} />
           <Route path="/order/details" exact element={<OrderDetails />} />
+          <Route path="/process/payment" exact element={<Payment />} />
           <Route
             path="/admin/create/category"
             exact

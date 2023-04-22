@@ -7,10 +7,20 @@ const {
   updateOrder,
   deleteOrder,
 } = require('../controllers/orderController');
+const multer = require('multer');
+
+const upload = multer({
+  fileFilter(req, file, callback) {
+    if (!file.originalname.match(/.(jpg|jpeg|png)$/)) {
+      return;
+    }
+    callback(undefined, true);
+  },
+});
 const router = express.Router();
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
 
-router.route('/order/new').post(isAuthenticatedUser, newOrder);
+router.route('/order/new').post(isAuthenticatedUser, upload.none(), newOrder);
 
 router.route('/order/:id').get(isAuthenticatedUser, getSingleOrder);
 

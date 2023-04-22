@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import CheckoutSteps from '../Cart/CheckoutSteps';
 import { useSelector } from 'react-redux';
 import './OrderDetails.css';
@@ -6,8 +6,10 @@ import { Link } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import { Navbar } from '../Main/Homepage/Navbar';
 import { useNavigate } from 'react-router-dom';
+import { PayButton } from '../Khalti/PayButton';
 const OrderDetails = () => {
   const navigate = useNavigate();
+  const [order, setOrder] = useState();
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
 
@@ -26,7 +28,30 @@ const OrderDetails = () => {
 
     navigate('/process/payment');
   };
+  useEffect(() => {
+    const orderObject = {
+      shippingInfo: {
+        firstName: shippingInfo.firstName,
+        address: shippingInfo.address,
+        city: shippingInfo.city,
+        province: shippingInfo.province,
+        contact: shippingInfo.contact,
+      },
+      orderItems: cartItems,
 
+      totalPrice: totalPrice,
+      orderStatus: 'processing',
+    };
+    setOrder(orderObject);
+  }, []);
+
+  console.log(
+    cartItems[0].name,
+    cartItems[0].price,
+    cartItems[0].image,
+    cartItems[0].product
+  );
+  console.log(user._id, user.firstName);
   return (
     <Fragment>
       <Navbar />
@@ -94,7 +119,7 @@ const OrderDetails = () => {
               <span>₹{totalPrice}</span>
             </div>
 
-            <button onClick={proceedToPayment}>Proceed To Payment</button>
+            <PayButton order={order}>Proceed To Payment</PayButton>
           </div>
         </div>
       </div>

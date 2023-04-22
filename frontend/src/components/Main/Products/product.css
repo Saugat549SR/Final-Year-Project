@@ -1,4 +1,4 @@
-.view {
+/* .view {
   display: grid;
   justify-content: center;
 }
@@ -17,7 +17,7 @@
 .view a:hover {
   background-color: #007bff;
   color: #fff;
-}
+} */
 .homeHeading {
   text-align: center;
   font-family: Roboto;
@@ -45,6 +45,8 @@
   margin: 2vmax;
   transition: all 0.5s;
   padding-bottom: 0.5vmax;
+  border-radius: 2%;
+  box-shadow: 0 0 5px rgba(15, 15, 15, 0.26);
 }
 
 .productCard > img {
@@ -70,8 +72,6 @@
   font-size: 1vmax;
 }
 .productCard:hover {
-  box-shadow: 0 0 5px rgba(15, 15, 15, 0.26);
-
   transform: translateY(-1vmax);
 }
 @media screen and (max-width: 600px) {
