@@ -45,13 +45,6 @@ const OrderDetails = () => {
     setOrder(orderObject);
   }, []);
 
-  console.log(
-    cartItems[0].name,
-    cartItems[0].price,
-    cartItems[0].image,
-    cartItems[0].product
-  );
-  console.log(user._id, user.firstName);
   return (
     <Fragment>
       <Navbar />

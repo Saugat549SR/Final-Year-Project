@@ -1,7 +1,9 @@
 import KhaltiCheckout from 'khalti-checkout-web';
 import axios from 'axios';
+import { useAlert } from 'react-alert';
 
 export const PayButton = ({ order }) => {
+  const alert = useAlert();
   let config = {
     // replace this key with yours
     publicKey: 'test_public_key_05d560376c6b45088540d839d935c324',
@@ -24,6 +26,9 @@ export const PayButton = ({ order }) => {
           console.log(data);
         } catch (error) {
           console.log(error);
+        }
+        if (ord) {
+          alert.success('Order placed Successfully');
         }
       },
       // onError handler is optional
