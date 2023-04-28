@@ -1,13 +1,13 @@
 .mainProfile {
   position: absolute;
-
-  left: 200px;
+  left: 500px;
   top: 150px;
 }
+
 .account {
   color: rgba(0, 0, 0, 0.555);
   font: 500 2.2vmax 'Roboto';
-  margin-left: 21%;
+  margin-left: 40%;
 }
 
 .profile {
@@ -18,7 +18,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
   padding: 30px;
 }
 
@@ -27,9 +26,9 @@
   padding: 20px 10px;
   display: flex;
   flex-direction: column;
-
   gap: 20px;
 }
+
 .dateDetail {
   font-weight: 200;
   color: gray;
@@ -43,27 +42,33 @@
   margin: 5px;
   font-weight: 500;
 }
+
 .aDetails {
   font-weight: 200;
   color: gray;
   align-items: flex-start;
 }
+
 .items {
   display: flex;
   gap: 20px;
   align-items: center;
 }
+
 .data {
   font-weight: 300;
 }
+
 .profile > a {
   margin-top: 2vmax;
 }
+
 .editDetails {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+
 .edit {
   width: 11vmax;
   background-color: #3d3b3b;
@@ -72,4 +77,26 @@
   border: none;
   padding: 0.5vmax;
   font: 200 1vmax;
+}
+
+@media only screen and (max-width: 600px) {
+  .mainProfile {
+    position: static;
+    left: auto;
+    top: auto;
+  }
+  .account {
+    margin-left: 0;
+    text-align: center;
+  }
+  .profile {
+    width: 80%;
+    padding: 20px;
+  }
+  .userFullname {
+    font-size: 1.5rem;
+  }
+  .edit {
+    font-size: 1rem;
+  }
 }

@@ -29,7 +29,7 @@ import { ProcessOrder } from './components/admin/ProcessOrder';
 import { CreateCategory } from './components/admin/CreateCategory';
 import RentShipping from './components/Main/Rents/RentShipping';
 import { RentOrderDetails } from './components/Main/Rents/RentOrderDetails';
-
+import { MyOrders } from './components/Order/MyOrders';
 function App() {
   React.useEffect(() => {
     store.dispatch(loadUser());
@@ -48,13 +48,21 @@ function App() {
         <Route path="/products" exact element={<ProductsPage />} />
         <Route path="/rents" exact element={<RentsPage />} />
         {/* <Route path="/products/:keyword" exact element={<ProductsPage />} /> */}
-        <Route element={<ProtectedRoute />}>
+        <Route element={<ProtectedRoute isAdmin={true} />}>
           <Route path="/admin/dashboard" exact element={<Dashboard />} />
           <Route path="/admin/products" exact element={<ProductList />} />
           <Route path="/admin/product" exact element={<NewProduct />} />
           <Route path="/admin/product/:id" exact element={<UpdateProduct />} />
           <Route path="/admin/orders" exact element={<OrderList />} />
           <Route path="/admin/order/:id" exact element={<ProcessOrder />} />
+
+          <Route
+            path="/admin/create/category"
+            exact
+            element={<CreateCategory />}
+          />
+        </Route>
+        <Route element={<ProtectedRoute />}>
           <Route path="/account" exact element={<Profile />} />
           <Route path="/me/update" exact element={<UpdateProfile />} />
           <Route path="/password/update" exact element={<UpdatePassword />} />
@@ -62,12 +70,7 @@ function App() {
           <Route path="/rent/shipping" exact element={<RentShipping />} />
           <Route path="/rent/details" exact element={<RentOrderDetails />} />
           <Route path="/order/details" exact element={<OrderDetails />} />
-          <Route path="/process/payment" exact element={<Payment />} />
-          <Route
-            path="/admin/create/category"
-            exact
-            element={<CreateCategory />}
-          />
+          <Route path="/order" exact element={<MyOrders />} />
         </Route>
         <Route path="/password/forgot" exact element={<ForgotPassword />} />
         <Route

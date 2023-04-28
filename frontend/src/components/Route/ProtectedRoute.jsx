@@ -1,25 +1,24 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { useAlert } from 'react-alert';
 import { useSelector } from 'react-redux';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const { loading, isAuthenticated, user } = useSelector((state) => state.user);
+const ProtectedRoute = ({ children, isAdmin }) => {
+  const navigate = useNavigate();
+  const alert = useAlert();
 
-  return (
-    <Fragment>
-      {!loading && (
-        <Outlet
-          {...rest}
-          render={(props) => {
-            if (!isAuthenticated) {
-              return <Navigate to="/login" />;
-            }
-            return <Component {...props} />;
-          }}
-        />
-      )}
-    </Fragment>
-  );
+  const { user, isAuthenticated } = useSelector((state) => state.user);
+
+  if (isAdmin === true && user?.role !== 'admin') {
+    alert.error('Only Admin Can Access This Resource');
+    return navigate('/');
+  }
+
+  if (isAuthenticated === false) {
+    return navigate('/login');
+  }
+
+  return children ? children : <Outlet />;
 };
 
 export default ProtectedRoute;

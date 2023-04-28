@@ -24,11 +24,13 @@ const Login = () => {
   };
   const redirect = location.search ? location.search.split('=')[1] : '/';
   useEffect(() => {
+    console.log(error);
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
     if (isAuthenticated) {
+      alert.success('Login Successfully');
       navigate(redirect);
     }
   }, [dispatch, error, alert, isAuthenticated, redirect, navigate]);

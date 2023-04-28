@@ -24,14 +24,26 @@ export const RentDetails = () => {
   }, [dispatch, params.id]);
 
   const selectTimeSlots = (values) => {
-    setFrom(
-      DateTime.fromJSDate(values[0].toDate()).toFormat('MMM dd yyyy HH:mm')
-    );
-    setTo(
-      DateTime.fromJSDate(values[1].toDate()).toFormat('MMM dd yyyy HH:mm')
-    );
-    setTotalDays(values[1].diff(values[0], 'Days'));
+    if (values && values.length === 2) {
+      const [startDate, endDate] = values;
+      setFrom(
+        DateTime.fromJSDate(startDate.toDate()).toFormat('MMM dd yyyy HH:mm')
+      );
+      setTo(
+        DateTime.fromJSDate(endDate.toDate()).toFormat('MMM dd yyyy HH:mm')
+      );
+      setTotalDays(endDate.diff(startDate, 'Days'));
+    } else {
+      setFrom('');
+      setTo('');
+      setTotalDays(0);
+    }
   };
+  const disabledDate = (current) => {
+    // Disable dates before today
+    return current && current < DateTime.local().startOf('day');
+  };
+
   const checkoutHandler = () => {
     if (user) {
       navigate('/rent/shipping');
@@ -74,6 +86,7 @@ export const RentDetails = () => {
               showTime={{ format: 'HH:mm' }}
               format="MMM DD YYYY HH:mm"
               onChange={selectTimeSlots}
+              disabledDate={disabledDate}
             />
             <div>
               <p>Total Days: {totalDays}</p>

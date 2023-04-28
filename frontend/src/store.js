@@ -18,6 +18,7 @@ import {
   allOrderReducer,
   orderReducer,
   orderDetailsReducer,
+  myOrdersReducer,
 } from './reducers/orderReducer';
 import { createCategoryReducer } from './reducers/categoryReducer';
 
@@ -36,6 +37,7 @@ const reducer = combineReducers({
   order: orderReducer,
   orderDetails: orderDetailsReducer,
   createCategory: createCategoryReducer,
+  myOrders: myOrdersReducer,
 });
 let initialState = {
   cart: {

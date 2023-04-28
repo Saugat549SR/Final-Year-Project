@@ -48,7 +48,7 @@ const NewProduct = () => {
     }
     if (success) {
       alert.success('Product Creates Successfully');
-      //navigate('/admin/dashboard');
+      navigate('/admin/dashboard');
       dispatch({ type: NEW_PRODUCT_RESET });
     }
   }, [dispatch, alert, error, success]);
