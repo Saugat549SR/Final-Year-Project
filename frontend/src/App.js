@@ -23,13 +23,13 @@ import { RentDetails } from './components/Main/Rents/RentDetails';
 import { RentsPage } from './components/Main/Rents/RentsPage';
 import Shipping from './components/Cart/Shipping';
 import OrderDetails from './components/Cart/OrderDetails';
-import { Payment } from './components/Cart/Payment';
 import { OrderList } from './components/admin/OrderList';
 import { ProcessOrder } from './components/admin/ProcessOrder';
 import { CreateCategory } from './components/admin/CreateCategory';
 import RentShipping from './components/Main/Rents/RentShipping';
 import { RentOrderDetails } from './components/Main/Rents/RentOrderDetails';
 import { MyOrders } from './components/Order/MyOrders';
+import { OrderDetailss } from './components/Order/OrderDetailss.jsx';
 function App() {
   React.useEffect(() => {
     store.dispatch(loadUser());
@@ -71,6 +71,7 @@ function App() {
           <Route path="/rent/details" exact element={<RentOrderDetails />} />
           <Route path="/order/details" exact element={<OrderDetails />} />
           <Route path="/order" exact element={<MyOrders />} />
+          <Route path="/order/:id" exact element={<OrderDetailss />} />
         </Route>
         <Route path="/password/forgot" exact element={<ForgotPassword />} />
         <Route
