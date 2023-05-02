@@ -7,6 +7,7 @@ const {
   getProductDetails,
   getAdminProducts,
   getAllProductsHome,
+  getCategoryProduct,
 } = require('../controllers/productController');
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
 const router = express.Router();
@@ -41,4 +42,5 @@ router.route('/admin/product/:id').delete(deleteProduct);
 
 router.route('/product/:id').get(getProductDetails);
 
+router.route('/category/products/:cat').get(getCategoryProduct);
 module.exports = router;

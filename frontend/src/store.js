@@ -24,7 +24,12 @@ import {
   orderDetailsReducer,
   myOrdersReducer,
 } from './reducers/orderReducer';
-import { createCategoryReducer } from './reducers/categoryReducer';
+import {
+  createCategoryReducer,
+  getCategoryDetailsReducer,
+  categoryUDReducer,
+  categoryReducer,
+} from './reducers/categoryReducer';
 
 const reducer = combineReducers({
   products: productReducer,
@@ -43,6 +48,9 @@ const reducer = combineReducers({
   orderDetails: orderDetailsReducer,
   createCategory: createCategoryReducer,
   myOrders: myOrdersReducer,
+  categoryDetails: getCategoryDetailsReducer,
+  category: categoryUDReducer,
+  categories: categoryReducer,
 });
 let initialState = {
   cart: {

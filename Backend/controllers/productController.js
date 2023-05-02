@@ -171,3 +171,19 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
     message: 'Product Deleted Sucessfully',
   });
 });
+
+// get product by category
+exports.getCategoryProduct = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const category = new RegExp(req.params.cat, 'i');
+    const product = await Product.find({ category: category });
+
+    if (product == null) {
+      return res.status(404).send({ message: 'Category not found' });
+    }
+
+    return res.send(product);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});

@@ -28,6 +28,16 @@
   margin: 5vmax auto;
   color: rgb(0, 0, 0, 0.7);
 }
+.categoryHeading {
+  text-align: center;
+  font-family: Roboto;
+  font-size: 1.4vmax;
+  border-bottom: 1px solid rgba(21, 21, 21, 0.5);
+  width: 20vmax;
+  padding: 1vmax;
+  margin: 5vmax auto;
+  color: rgb(0, 0, 0, 0.7);
+}
 .container {
   margin-top: -5%;
   height: 700px;
@@ -88,4 +98,12 @@
 
 .shiftToRight {
   transform: translateX(100%);
+}
+.category {
+  display: flex;
+  margin: 2vmax auto;
+  width: 80vw;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
 }

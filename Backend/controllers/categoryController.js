@@ -54,3 +54,25 @@ exports.createCategory = catchAsyncErrors(async (req, res, next) => {
     res.status(400).send({ message: error.message });
   }
 });
+
+exports.deleteCategory = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const category = await Category.findById(req.params.id);
+    if (category == null) {
+      return res.status(404).send({ message: 'Category not found' });
+    }
+    await category.remove();
+    res.send({ message: 'Category deleted' });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+
+exports.getAllCategory = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const categories = await Category.find();
+    res.send(categories);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});

@@ -32,8 +32,14 @@ import { MyOrders } from './components/Order/MyOrders';
 import { OrderDetailss } from './components/Order/OrderDetailss.jsx';
 import { NewRent } from './components/Main/Rents/NewRent';
 import { RentList } from './components/Main/Rents/RentList';
+import { getAllCategory } from './actions/categoryAction';
+import { useDispatch } from 'react-redux';
+import { CategoryProduct } from './components/Main/Category/CategoryProduct';
+
 function App() {
+  const dispatch = useDispatch();
   React.useEffect(() => {
+    dispatch(getAllCategory());
     store.dispatch(loadUser());
   });
 
@@ -75,6 +81,7 @@ function App() {
           <Route path="/order/details" exact element={<OrderDetails />} />
           <Route path="/order" exact element={<MyOrders />} />
           <Route path="/order/:id" exact element={<OrderDetailss />} />
+          <Route path="/category/:cat" element={<CategoryProduct />} exact />
         </Route>
         <Route path="/password/forgot" exact element={<ForgotPassword />} />
         <Route

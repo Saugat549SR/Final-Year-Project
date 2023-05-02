@@ -13,6 +13,7 @@ import { Fragment, useEffect, useRef } from 'react';
 import Loader from './Loader/Loader';
 import { useAlert } from 'react-alert';
 import { Link } from 'react-router-dom';
+import { CategoryCard } from './Category/CategoryCard';
 
 const Main = () => {
   const alert = useAlert();
@@ -21,6 +22,7 @@ const Main = () => {
     (state) => state.products
   );
   const { rents } = useSelector((state) => state.rents);
+  const { categories } = useSelector((state) => state.categories);
   const buyTab = useRef(null);
   const rentTab = useRef(null);
   const switcherTab = useRef(null);
@@ -93,7 +95,13 @@ const Main = () => {
               </div>
             </div>
           </div>
-
+          <h2 className="categoryHeading">Category</h2>
+          <div className="category">
+            {categories &&
+              categories.map((category) => (
+                <CategoryCard category={category} key={category._id} />
+              ))}
+          </div>
           <Footer />
         </Box>
       )}

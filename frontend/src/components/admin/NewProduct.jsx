@@ -20,6 +20,7 @@ const NewProduct = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const { loading, error, success } = useSelector((state) => state.newProduct);
+  const { categories } = useSelector((state) => state.categories);
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(1);
@@ -30,17 +31,6 @@ const NewProduct = () => {
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
 
-  const categories = [
-    'Honda',
-    'Yamaha',
-    'KTM',
-    'Hero',
-    'Suzuki',
-    'CrossFire',
-    'Kawasaki',
-    'Bajaj',
-    'TVS',
-  ];
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -162,13 +152,17 @@ const NewProduct = () => {
 
             <div>
               <AccountTreeIcon />
-              <select onChange={(e) => setCategory(e.target.value)}>
-                <option value="">Choose Category</option>
-                {categories.map((cate) => (
-                  <option key={cate} value={cate}>
-                    {cate}
-                  </option>
-                ))}
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option>Choose Category</option>
+                {categories &&
+                  categories.map((option) => (
+                    <option key={option._id} value={option.title}>
+                      {option.title}
+                    </option>
+                  ))}
               </select>
             </div>
 
