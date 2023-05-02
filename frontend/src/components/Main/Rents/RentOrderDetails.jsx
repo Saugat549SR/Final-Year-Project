@@ -1,31 +1,24 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import CheckoutSteps from '../../Cart/CheckoutSteps';
 import { useSelector } from 'react-redux';
 import './RentOrderDetails.css';
 import { Link } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import { Navbar } from '../Homepage/Navbar';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 export const RentOrderDetails = () => {
   const navigate = useNavigate();
   const { rentShippingInfo, rent } = useSelector((state) => state.rentDetails);
   const { user } = useSelector((state) => state.user);
+  const [subtotal, setSubTotal] = useState();
 
-  //     const subtotal = rent.reduce((acc, item) => acc + item.price, 0);
-  //     const shippingCharges = subtotal > 10000 ? 1000 : 2000;
-  //     const totalPrice = subtotal + shippingCharges;
-  //   const address = `${rentShippingInfo.address}`;
-  //   const proceedToPayment = () => {
-  //     const data = {
-  //         subtotal,
-  //       shippingCharges,
-  //       totalPrice,
-  //     };
+  useEffect(() => {
+    setSubTotal(localStorage.getItem('subTotal'));
+  }, []);
 
-  //     sessionStorage.setItem('orderInfo', JSON.stringify(data));
-
-  //     navigate('/process/payment');
-  //   };
+  const shippingCharges = subtotal > 1000 ? 100 : 200;
+  const totalPrice = Number(subtotal) + shippingCharges;
 
   return (
     <Fragment>
@@ -50,12 +43,12 @@ export const RentOrderDetails = () => {
               </div>
               <div>
                 <p>Address:</p>
-                {/* <span>{address}</span> */}
+                <span>{rentShippingInfo.address}</span>
               </div>
             </div>
           </div>
           <div className="confirmCartItems">
-            <Typography>Your Cart Items:</Typography>
+            <Typography>Your Rent Items:</Typography>
             <div className="confirmCartItemsContainer">
               {rent.images &&
                 rent.images.map((item) => (
@@ -79,11 +72,11 @@ export const RentOrderDetails = () => {
             <div>
               <div>
                 <p>Subtotal:</p>
-                {/* <span>₹{subtotal}</span> */}
+                <span>{subtotal}</span>
               </div>
               <div>
                 <p>Shipping Charges:</p>
-                {/* <span>₹{shippingCharges}</span> */}
+                <span>₹{shippingCharges}</span>
               </div>
             </div>
 
@@ -91,7 +84,7 @@ export const RentOrderDetails = () => {
               <p>
                 <b>Total:</b>
               </p>
-              {/* <span>₹{totalPrice}</span> */}
+              <span>₹{totalPrice}</span>
             </div>
 
             {/* <button onClick={proceedToPayment}>Proceed To Payment</button> */}

@@ -10,8 +10,46 @@ import {
   RENT_DETAILS_SUCCESS,
   RENT_DETAILS_FAIL,
   RENT_SAVE_SHIPPING_INFO,
+  CREATE_PRODUCT_REQUEST,
+  CREATE_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_FAIL,
+  ADMIN_RENT_REQUEST,
+  ADMIN_RENT_SUCCESS,
+  ADMIN_RENT_FAIL,
+  UPDATE_RENT_REQUEST,
+  UPDATE_RENT_SUCCESS,
+  UPDATE_RENT_FAIL,
+  UPDATE_RENT_RESET,
+  DELETE_RENT_REQUEST,
+  DELETE_RENT_SUCCESS,
+  DELETE_RENT_FAIL,
   CLEAR_ERRORS,
 } from '../constants/rentConstants';
+
+//create product --ADMIN
+export const createRent = (rentData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: CREATE_PRODUCT_REQUEST,
+    });
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    const { data } = await axios.post(
+      `/api/v1/admin/rent/new`,
+      rentData,
+      config
+    );
+
+    dispatch({
+      type: CREATE_PRODUCT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 // get all rent --products
 export const getRentProduct =
@@ -84,6 +122,44 @@ export const rentSaveShippingInfo = (data) => async (dispatch) => {
     payload: data,
   });
   localStorage.setItem('rentShippingInfo', JSON.stringify(data));
+};
+
+// Get all products for Admin
+export const getAdminRent = () => async (dispatch) => {
+  try {
+    dispatch({ type: ADMIN_RENT_REQUEST });
+    const { data } = await axios.get('/api/v1/admin/rent/products');
+    dispatch({
+      type: ADMIN_RENT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_RENT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//delete product --ADMIN
+export const deleteRent = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: DELETE_RENT_REQUEST,
+    });
+
+    const { data } = await axios.delete(`/api/v1/admin/rent/${id}`);
+
+    dispatch({
+      type: DELETE_RENT_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_RENT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };
 
 //clearing Erros

@@ -14,6 +14,7 @@ import { Navbar } from '../Homepage/Navbar';
 const RentShipping = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const alert = useAlert();
   const { shippingInfo } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);

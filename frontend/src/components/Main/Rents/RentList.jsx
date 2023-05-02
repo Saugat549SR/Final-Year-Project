@@ -1,31 +1,29 @@
 import React, { Fragment, useEffect } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
-import './productList.css';
+import './RentList.css';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   clearErrors,
-  getAdminProduct,
-  deleteProduct,
-} from '../../actions/productAction';
+  getAdminRent,
+  deleteRent,
+} from '../../../actions/rentAction';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import SideBar from './Sidebar';
-import { DELETE_PRODUCT_RESET } from '../../constants/productConstants';
+import SideBar from '../../admin/Sidebar';
+import { DELETE_RENT_RESET } from '../../../constants/rentConstants';
 import { useAlert } from 'react-alert';
 import { useNavigate } from 'react-router-dom';
 
-const ProductList = () => {
+export const RentList = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const navigate = useNavigate();
-  const { error, products } = useSelector((state) => state.products);
-  const { error: deleteError, isDeleted } = useSelector(
-    (state) => state.products
-  );
+  const { error, rents } = useSelector((state) => state.rents);
+  const { error: deleteError, isDeleted } = useSelector((state) => state.rents);
   const deleteProductHandler = (id) => {
-    dispatch(deleteProduct(id));
+    dispatch(deleteRent(id));
   };
   useEffect(() => {
     if (error) {
@@ -39,9 +37,9 @@ const ProductList = () => {
     if (isDeleted) {
       alert.success('Product Deleted Successfully');
       navigate('/admin/dashboard');
-      dispatch({ type: DELETE_PRODUCT_RESET });
+      dispatch({ type: DELETE_RENT_RESET });
     }
-    dispatch(getAdminProduct());
+    dispatch(getAdminRent());
   }, [dispatch, alert, error, deleteError, isDeleted, navigate]);
 
   const columns = [
@@ -87,8 +85,8 @@ const ProductList = () => {
 
   const rows = [];
 
-  products &&
-    products.forEach((item) => {
+  rents &&
+    rents.forEach((item) => {
       rows.push({
         id: item._id,
         price: item.price,
@@ -114,5 +112,3 @@ const ProductList = () => {
     </Fragment>
   );
 };
-
-export default ProductList;

@@ -28,10 +28,16 @@ const Sidebar = () => {
         >
           <TreeItem nodeId="1" label="Products">
             <Link to="/admin/products">
-              <TreeItem nodeId="2" label="All" icon={<PostAddIcon />} />
+              <TreeItem nodeId="2" label="All Buy" icon={<PostAddIcon />} />
+            </Link>
+            <Link to="/admin/rent/products">
+              <TreeItem nodeId="2" label="All Rent" icon={<PostAddIcon />} />
             </Link>
             <Link to="/admin/product">
-              <TreeItem nodeId="3" label="Create" icon={<AddIcon />} />
+              <TreeItem nodeId="3" label="Create Buy" icon={<AddIcon />} />
+            </Link>
+            <Link to="/admin/rent/new">
+              <TreeItem nodeId="3" label="Create Rent" icon={<AddIcon />} />
             </Link>
           </TreeItem>
         </TreeView>

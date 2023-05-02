@@ -14,7 +14,7 @@ const OrderDetails = () => {
   const { user } = useSelector((state) => state.user);
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
-  const shippingCharges = subtotal > 10000 ? 1000 : 2000;
+  const shippingCharges = subtotal > 10000 ? 200 : 100;
   const totalPrice = subtotal + shippingCharges;
   const address = `${shippingInfo.address}`;
   const proceedToPayment = () => {

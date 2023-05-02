@@ -13,7 +13,11 @@ import {
   userReducer,
 } from './reducers/userReducer';
 import { cartReducer } from './reducers/cartReducer';
-import { rentDetailsReducer, rentReducer } from './reducers/rentReducer';
+import {
+  newRentReducer,
+  rentDetailsReducer,
+  rentReducer,
+} from './reducers/rentReducer';
 import {
   allOrderReducer,
   orderReducer,
@@ -31,6 +35,7 @@ const reducer = combineReducers({
   cart: cartReducer,
   profile: profileReducer,
   forgotPassword: forgotPasswordReducer,
+  newRent: newRentReducer,
   rents: rentReducer,
   rentDetails: rentDetailsReducer,
   allOrders: allOrderReducer,

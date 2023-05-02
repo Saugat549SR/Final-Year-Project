@@ -73,6 +73,7 @@
 }
 .rent {
   transform: translateY(-50%) translateX(-80vmax);
+  display: flex;
 }
 .shiftToLeft {
   transform: translateX(-110%);

@@ -30,6 +30,8 @@ import RentShipping from './components/Main/Rents/RentShipping';
 import { RentOrderDetails } from './components/Main/Rents/RentOrderDetails';
 import { MyOrders } from './components/Order/MyOrders';
 import { OrderDetailss } from './components/Order/OrderDetailss.jsx';
+import { NewRent } from './components/Main/Rents/NewRent';
+import { RentList } from './components/Main/Rents/RentList';
 function App() {
   React.useEffect(() => {
     store.dispatch(loadUser());
@@ -51,11 +53,12 @@ function App() {
         <Route element={<ProtectedRoute isAdmin={true} />}>
           <Route path="/admin/dashboard" exact element={<Dashboard />} />
           <Route path="/admin/products" exact element={<ProductList />} />
+          <Route path="/admin/rent/products" exact element={<RentList />} />
           <Route path="/admin/product" exact element={<NewProduct />} />
           <Route path="/admin/product/:id" exact element={<UpdateProduct />} />
           <Route path="/admin/orders" exact element={<OrderList />} />
           <Route path="/admin/order/:id" exact element={<ProcessOrder />} />
-
+          <Route path="/admin/rent/new" exact element={<NewRent />} />
           <Route
             path="/admin/create/category"
             exact

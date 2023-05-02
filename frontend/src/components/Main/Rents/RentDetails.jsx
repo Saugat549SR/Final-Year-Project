@@ -46,6 +46,8 @@ export const RentDetails = () => {
 
   const checkoutHandler = () => {
     if (user) {
+      localStorage.setItem('totalDays', totalDays);
+      localStorage.setItem('subTotal', rent.price * totalDays);
       navigate('/rent/shipping');
     } else {
       // alert.error('Please Login to access this resouces');
