@@ -6,20 +6,48 @@ import { Link } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import { Navbar } from '../Homepage/Navbar';
 import { useNavigate, useLocation } from 'react-router-dom';
-
+import { PayButton } from '../../Khalti/PayButton';
 export const RentOrderDetails = () => {
   const navigate = useNavigate();
   const { rentShippingInfo, rent } = useSelector((state) => state.rentDetails);
   const { user } = useSelector((state) => state.user);
   const [subtotal, setSubTotal] = useState();
-
+  const [order, setOrder] = useState();
+  const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     setSubTotal(localStorage.getItem('subTotal'));
   }, []);
 
   const shippingCharges = subtotal > 1000 ? 100 : 200;
-  const totalPrice = Number(subtotal) + shippingCharges;
+  const parsedSubtotal = parseFloat(subtotal);
+  const parsedShippingCharges = parseFloat(shippingCharges);
+  const calculatedTotalPrice = parsedSubtotal + parsedShippingCharges;
 
+  useEffect(() => {
+    setTotalPrice(calculatedTotalPrice);
+  }, [subtotal]);
+
+  useEffect(() => {
+    const orderObject = {
+      shippingInfo: {
+        firstName: rentShippingInfo.firstName,
+        address: rentShippingInfo.address,
+        city: rentShippingInfo.city,
+        province: rentShippingInfo.province,
+        contact: rentShippingInfo.contact,
+      },
+      orderItems: {
+        name: rent.name,
+        price: rent.price,
+        image: rent?.images?.[0]?.url,
+        product: rent._id,
+      },
+
+      totalPrice: totalPrice,
+      orderStatus: 'processing',
+    };
+    setOrder(orderObject);
+  }, [totalPrice]);
   return (
     <Fragment>
       <Navbar />
@@ -87,7 +115,7 @@ export const RentOrderDetails = () => {
               <span>₹{totalPrice}</span>
             </div>
 
-            {/* <button onClick={proceedToPayment}>Proceed To Payment</button> */}
+            <PayButton order={order}>Proceed To Payment</PayButton>
           </div>
         </div>
       </div>

@@ -17,17 +17,7 @@ const OrderDetails = () => {
   const shippingCharges = subtotal > 10000 ? 200 : 100;
   const totalPrice = subtotal + shippingCharges;
   const address = `${shippingInfo.address}`;
-  const proceedToPayment = () => {
-    const data = {
-      subtotal,
-      shippingCharges,
-      totalPrice,
-    };
 
-    sessionStorage.setItem('orderInfo', JSON.stringify(data));
-
-    navigate('/process/payment');
-  };
   useEffect(() => {
     const orderObject = {
       shippingInfo: {

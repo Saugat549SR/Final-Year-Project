@@ -20,6 +20,7 @@ export const PayButton = ({ order }) => {
           paymentInfo: { id: payload.idx, status: 'succeed' },
         };
         console.log(ord);
+
         try {
           const config = { headers: { 'Content-Type': 'multipart/form-data' } };
           const { data } = await axios.post(`/api/v1/order/new`, ord, config);
@@ -27,6 +28,7 @@ export const PayButton = ({ order }) => {
         } catch (error) {
           console.log(error);
         }
+
         if (ord) {
           alert.success('Order placed Successfully');
         }

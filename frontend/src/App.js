@@ -35,6 +35,7 @@ import { RentList } from './components/Main/Rents/RentList';
 import { getAllCategory } from './actions/categoryAction';
 import { useDispatch } from 'react-redux';
 import { CategoryProduct } from './components/Main/Category/CategoryProduct';
+import { UserList } from './components/admin/UserList';
 
 function App() {
   const dispatch = useDispatch();
@@ -65,6 +66,7 @@ function App() {
           <Route path="/admin/orders" exact element={<OrderList />} />
           <Route path="/admin/order/:id" exact element={<ProcessOrder />} />
           <Route path="/admin/rent/new" exact element={<NewRent />} />
+          <Route path="/admin/users" exact element={<UserList />} />
           <Route
             path="/admin/create/category"
             exact
@@ -81,8 +83,8 @@ function App() {
           <Route path="/order/details" exact element={<OrderDetails />} />
           <Route path="/order" exact element={<MyOrders />} />
           <Route path="/order/:id" exact element={<OrderDetailss />} />
-          <Route path="/category/:cat" element={<CategoryProduct />} exact />
         </Route>
+        <Route path="/category/:cat" element={<CategoryProduct />} exact />
         <Route path="/password/forgot" exact element={<ForgotPassword />} />
         <Route
           path="/password/reset/:token"
