@@ -102,7 +102,9 @@ const OrderDetails = () => {
               <span>₹{totalPrice}</span>
             </div>
 
-            <PayButton order={order}>Proceed To Payment</PayButton>
+            <PayButton order={order} cartItems={cartItems}>
+              Proceed To Payment
+            </PayButton>
           </div>
         </div>
       </div>

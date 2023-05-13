@@ -1,24 +1,33 @@
-import * as React from 'react';
-import { useState, Fragment } from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
+import React, { Fragment } from 'react';
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  styled,
+  InputBase,
+  Badge,
+  MenuItem,
+  Button,
+  Select,
+} from '@mui/material';
+import TwoWheelerTwoToneIcon from '@mui/icons-material/TwoWheelerTwoTone';
 import { ShoppingCart, Login } from '@mui/icons-material';
-import InputBase from '@mui/material/InputBase';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
+import { useSelector, useDispatch } from 'react-redux';
 import { useAlert } from 'react-alert';
 import { logout } from '../../../actions/userAction';
+import { alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import Menu from '@mui/material/Menu';
+import IconButton from '@mui/material/IconButton';
+const StyledToolbar = styled(Toolbar)({
+  display: 'flex',
+  justifyContent: 'space-between',
+  backgroundColor: '#5783db',
+});
 
-import MoreIcon from '@mui/icons-material/MoreVert';
-
-import { Badge, Button, Select } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -30,19 +39,11 @@ const Search = styled('div')(({ theme }) => ({
   marginLeft: 0,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(65),
+    marginLeft: theme.spacing(45),
     width: 'auto',
   },
 }));
 
-const Icons = styled(Box)(({ theme }) => ({
-  display: 'none',
-  alignItems: 'center',
-  gap: '20px',
-  [theme.breakpoints.up('sm')]: {
-    display: 'flex',
-  },
-}));
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
@@ -67,16 +68,36 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const Icons = styled(Box)(({ theme }) => ({
+  display: 'none',
+  alignItems: 'center',
+  gap: '20px',
+  [theme.breakpoints.up('sm')]: {
+    display: 'flex',
+  },
+}));
+
+const UserBox = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+  [theme.breakpoints.up('sm')]: {
+    display: 'none',
+  },
+}));
+
 const Text = styled('div')`
   font-size: 16px;
   font-weight: 400;
   color: #333;
 `;
-export function Navbar() {
+export const Navbar = () => {
+  // new added
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
   const { cartItems } = useSelector((state) => state.cart);
@@ -97,7 +118,8 @@ export function Navbar() {
     alert.success('Logged out Successfully');
   };
   const firstName = `${user && user.firstName}`;
-  const navigate = useNavigate();
+
+  //new added
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -116,6 +138,7 @@ export function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  //new added
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -133,44 +156,46 @@ export function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {user ? (
-        <Fragment>
-          {user && user.role !== 'admin' ? (
+      {user
+        ? [
+            user && user.role !== 'admin' ? (
+              <Link
+                to="/order"
+                style={{ textDecoration: 'none', color: 'black' }}
+                key="orders"
+              >
+                <MenuItem>Orders</MenuItem>
+              </Link>
+            ) : (
+              <Link
+                to="/admin/dashboard"
+                style={{ textDecoration: 'none', color: 'black' }}
+                key="dashboard"
+              >
+                <MenuItem>Dashboard</MenuItem>
+              </Link>
+            ),
             <Link
-              to="/order"
+              to="/account"
               style={{ textDecoration: 'none', color: 'black' }}
+              key="account"
             >
-              <MenuItem>Orders</MenuItem>
-            </Link>
-          ) : (
+              <MenuItem>My account</MenuItem>
+            </Link>,
             <Link
-              to="/admin/dashboard"
+              to="/"
+              onClick={logoutHand}
               style={{ textDecoration: 'none', color: 'black' }}
+              key="logout"
             >
-              <MenuItem>Dashboard</MenuItem>
+              <MenuItem>Logout</MenuItem>
+            </Link>,
+          ]
+        : !loading && (
+            <Link to="/login">
+              <Login />
             </Link>
           )}
-          <Link
-            to="/account"
-            style={{ textDecoration: 'none', color: 'black' }}
-          >
-            <MenuItem>My account</MenuItem>
-          </Link>
-          <Link
-            to="/"
-            onClick={logoutHand}
-            style={{ textDecoration: 'none', color: 'black' }}
-          >
-            <MenuItem>Logout</MenuItem>
-          </Link>
-        </Fragment>
-      ) : (
-        !loading && (
-          <Link to="/login">
-            <Login />
-          </Link>
-        )
-      )}
     </Menu>
   );
 
@@ -207,67 +232,55 @@ export function Navbar() {
   );
 
   return (
-    // <Box sx={{ flexGrow: 1 }}>
-    <AppBar position="sticky">
-      <Toolbar>
+    <AppBar position="sticky" style={{ maxHeight: '50px' }}>
+      <StyledToolbar>
         <Text
           variant="h6"
-          noWrap
-          component="div"
           sx={{ display: { xs: 'none', sm: 'block' } }}
+          onClick={() => navigate('/')}
         >
           <Link to="/" style={{ textDecoration: 'none' }}>
             BIKE BARN
           </Link>
         </Text>
+        {/* <TwoWheelerTwoToneIcon sx={{ display: { xs: 'block', sm: 'none' } }} /> */}
+
         <Search>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase
             placeholder="Search…"
+            onChange={(e) => setKeyword(e.target.value)}
             inputProps={{ 'aria-label': 'search' }}
           />
+          <Button onClick={searchSubmitHandler}> Submit</Button>
         </Search>
-        <Box sx={{ flexGrow: 1 }} />
-        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          <Icons>
-            <Badge>
-              <Link to="/cart">
-                <Badge badgeContent={`${cartItems.length}`} color="secondary">
-                  <ShoppingCart sx={{ fontSize: '25px' }} />
-                </Badge>
-              </Link>
-            </Badge>
-          </Icons>
-          <IconButton
-            size="large"
-            edge="end"
-            aria-label="account of current user"
-            aria-controls={menuId}
-            aria-haspopup="true"
-            onClick={handleProfileMenuOpen}
-            color="inherit"
-          >
-            <AccountCircle />
-            <MenuItem> {user?.firstName}</MenuItem>
-          </IconButton>
-        </Box>
-        <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-          <IconButton
-            size="large"
-            aria-label="show more"
-            aria-controls={mobileMenuId}
-            aria-haspopup="true"
-            onClick={handleMobileMenuOpen}
-            color="inherit"
-          >
-            <MoreIcon />
-          </IconButton>
-        </Box>
-      </Toolbar>
+        <Icons>
+          <Badge>
+            <Link to="/cart">
+              <Badge badgeContent={`${cartItems.length}`} color="primary">
+                <ShoppingCart sx={{ fontSize: '25px' }} />
+              </Badge>
+            </Link>
+          </Badge>
+        </Icons>
+        <UserBox onClick={(e) => setOpen(true)}></UserBox>
+        <IconButton
+          size="large"
+          edge="end"
+          aria-label="account of current user"
+          aria-controls={menuId}
+          aria-haspopup="true"
+          onClick={handleProfileMenuOpen}
+          color="inherit"
+        >
+          <AccountCircle />
+          <MenuItem> {user?.firstName}</MenuItem>
+        </IconButton>
+      </StyledToolbar>
       {renderMobileMenu}
       {renderMenu}
     </AppBar>
   );
-}
+};

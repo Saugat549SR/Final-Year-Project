@@ -38,6 +38,7 @@
 }
 .productCard {
   width: 14vmax;
+  padding: 5px 10px;
   display: flex;
   flex-direction: column;
   text-decoration: none;

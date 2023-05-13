@@ -36,6 +36,7 @@ import { getAllCategory } from './actions/categoryAction';
 import { useDispatch } from 'react-redux';
 import { CategoryProduct } from './components/Main/Category/CategoryProduct';
 import { UserList } from './components/admin/UserList';
+import { Search } from './components/Main/Products/Search';
 
 function App() {
   const dispatch = useDispatch();
@@ -91,6 +92,7 @@ function App() {
           exact
           element={<ResetPassword />}
         />
+        <Route path="/products/:search" exact element={<Search />} />
         <Route path="/cart" exact element={<Cart />} />
       </Routes>
     </Router>

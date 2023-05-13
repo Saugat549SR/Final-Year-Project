@@ -2,7 +2,7 @@ import KhaltiCheckout from 'khalti-checkout-web';
 import axios from 'axios';
 import { useAlert } from 'react-alert';
 
-export const PayButton = ({ order }) => {
+export const PayButton = ({ order, cartItems }) => {
   const alert = useAlert();
   let config = {
     // replace this key with yours
@@ -25,6 +25,14 @@ export const PayButton = ({ order }) => {
           const config = { headers: { 'Content-Type': 'multipart/form-data' } };
           const { data } = await axios.post(`/api/v1/order/new`, ord, config);
           console.log(data);
+          cartItems.forEach((item, index) => {
+            if (item.productId === ord.orderItems[0].productId) {
+              item.stock -= order.orderItems[0].quantity;
+
+              cartItems.splice(index, 1);
+            }
+          });
+          // window.location.href = '/';
         } catch (error) {
           console.log(error);
         }
