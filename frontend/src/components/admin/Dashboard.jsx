@@ -13,6 +13,7 @@ const Dashboard = () => {
 
   const { products } = useSelector((state) => state.products);
   const { orders } = useSelector((state) => state.allOrders);
+  const { users } = useSelector((state) => state.allUsers);
 
   useEffect(() => {
     dispatch(getAdminProduct());
@@ -40,7 +41,7 @@ const Dashboard = () => {
           <div className="dashboardSummary">
             <div>
               <p>
-                Total Amount <br /> Rs.20000
+                Total Amount <br /> Rs.20
               </p>
             </div>
             <div className="dashboardSummaryBox2">
@@ -56,7 +57,7 @@ const Dashboard = () => {
 
               <Link to="/admin/users">
                 <p>Users</p>
-                <p>2</p>
+                <p>{users && users.length}</p>
               </Link>
             </div>
           </div>

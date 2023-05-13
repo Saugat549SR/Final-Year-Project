@@ -37,6 +37,7 @@ import { useDispatch } from 'react-redux';
 import { CategoryProduct } from './components/Main/Category/CategoryProduct';
 import { UserList } from './components/admin/UserList';
 import { Search } from './components/Main/Products/Search';
+import { UpdateUser } from './components/admin/UpdateUser';
 
 function App() {
   const dispatch = useDispatch();
@@ -68,6 +69,7 @@ function App() {
           <Route path="/admin/order/:id" exact element={<ProcessOrder />} />
           <Route path="/admin/rent/new" exact element={<NewRent />} />
           <Route path="/admin/users" exact element={<UserList />} />
+          <Route path="/admin/user/:id" exact element={<UpdateUser />} />
           <Route
             path="/admin/create/category"
             exact
