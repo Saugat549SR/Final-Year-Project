@@ -22,6 +22,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
+import imge from '../../ImagesDisplayed/logo.png';
+
 const StyledToolbar = styled(Toolbar)({
   display: 'flex',
   justifyContent: 'space-between',
@@ -235,12 +237,12 @@ export const Navbar = () => {
     <AppBar position="sticky" style={{ maxHeight: '50px' }}>
       <StyledToolbar>
         <Text
-          variant="h6"
+          variant="h5"
           sx={{ display: { xs: 'none', sm: 'block' } }}
           onClick={() => navigate('/')}
         >
           <Link to="/" style={{ textDecoration: 'none' }}>
-            BIKE BARN
+            <img src={imge} style={{ width: '80px' }} />
           </Link>
         </Text>
         {/* <TwoWheelerTwoToneIcon sx={{ display: { xs: 'block', sm: 'none' } }} /> */}

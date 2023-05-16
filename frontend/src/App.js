@@ -38,6 +38,8 @@ import { CategoryProduct } from './components/Main/Category/CategoryProduct';
 import { UserList } from './components/admin/UserList';
 import { Search } from './components/Main/Products/Search';
 import { UpdateUser } from './components/admin/UpdateUser';
+import { CategoryList } from './components/admin/CategoryList';
+import { UpdateRent } from './components/Main/Rents/UpdateRent';
 
 function App() {
   const dispatch = useDispatch();
@@ -70,11 +72,14 @@ function App() {
           <Route path="/admin/rent/new" exact element={<NewRent />} />
           <Route path="/admin/users" exact element={<UserList />} />
           <Route path="/admin/user/:id" exact element={<UpdateUser />} />
+          <Route path="/admin/rent/:id" exact element={<UpdateRent />} />
+
           <Route
             path="/admin/create/category"
             exact
             element={<CreateCategory />}
           />
+          <Route path="/admin/category" exact element={<CategoryList />} />
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="/account" exact element={<Profile />} />

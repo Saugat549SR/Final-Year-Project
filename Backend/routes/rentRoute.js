@@ -38,7 +38,7 @@ router.route('/rent/:id').get(getRentProductDetails);
 
 router
   .route('/admin/rent/:id')
-  .put(updateRentProduct)
+  .put(upload.array('images'), updateRentProduct)
   .delete(deleteRentProduct);
 
 module.exports = router;

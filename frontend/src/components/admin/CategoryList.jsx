@@ -1,29 +1,29 @@
 import React, { Fragment, useEffect } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
-import './RentList.css';
+import './productList.css';
 import { useSelector, useDispatch } from 'react-redux';
 import {
+  deleteCategory,
+  getAllCategory,
   clearErrors,
-  getAdminRent,
-  deleteRent,
-} from '../../../actions/rentAction';
-import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
+} from '../../actions/categoryAction';
+import SideBar from './Sidebar';
 import DeleteIcon from '@material-ui/icons/Delete';
-import SideBar from '../../admin/Sidebar';
-import { DELETE_RENT_RESET } from '../../../constants/rentConstants';
+
+import { Button } from '@material-ui/core';
+import { CATEGORY_DELETE_RESET } from '../../constants/categoryConstants';
 import { useAlert } from 'react-alert';
 import { useNavigate } from 'react-router-dom';
-
-export const RentList = () => {
+export const CategoryList = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const navigate = useNavigate();
-  const { error, rents } = useSelector((state) => state.rents);
-  const { error: deleteError, isDeleted } = useSelector((state) => state.rents);
+  const { categories, error } = useSelector((state) => state.categories);
+  const { error: deleteError, isDeleted } = useSelector(
+    (state) => state.categories
+  );
   const deleteProductHandler = (id) => {
-    dispatch(deleteRent(id));
+    dispatch(deleteCategory(id));
   };
   useEffect(() => {
     if (error) {
@@ -35,28 +35,21 @@ export const RentList = () => {
       dispatch(clearErrors());
     }
     if (isDeleted) {
-      alert.success('Product Deleted Successfully');
+      alert.success('Category Deleted Successfully');
       navigate('/admin/dashboard');
-      dispatch({ type: DELETE_RENT_RESET });
+      dispatch({ type: CATEGORY_DELETE_RESET });
     }
-    dispatch(getAdminRent());
+    dispatch(getAllCategory());
   }, [dispatch, alert, error, deleteError, isDeleted, navigate]);
 
   const columns = [
     {
-      field: 'name',
-      headerName: 'Name',
+      field: 'title',
+      headerName: 'title',
       minWidth: 350,
       flex: 0.5,
     },
 
-    {
-      field: 'price',
-      headerName: 'Price',
-      type: 'number',
-      minWidth: 270,
-      flex: 0.3,
-    },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -67,9 +60,6 @@ export const RentList = () => {
       renderCell: (params) => {
         return (
           <Fragment>
-            <Link to={`/admin/rent/${params.getValue(params.id, 'id')}`}>
-              <EditIcon />
-            </Link>
             <Button
               onClick={() =>
                 deleteProductHandler(params.getValue(params.id, 'id'))
@@ -82,15 +72,13 @@ export const RentList = () => {
       },
     },
   ];
-
   const rows = [];
 
-  rents &&
-    rents.forEach((item) => {
+  categories &&
+    categories.forEach((item) => {
       rows.push({
         id: item._id,
-        price: item.price,
-        name: item.name,
+        title: item.title,
       });
     });
 
@@ -99,7 +87,7 @@ export const RentList = () => {
       <div className="dashboard">
         <SideBar />
         <div className="productListContainer">
-          <h1 id="productListHeading">ALL PRODUCTS</h1>
+          <h1 id="productListHeading">ALL Category</h1>
           <DataGrid
             rows={rows}
             columns={columns}

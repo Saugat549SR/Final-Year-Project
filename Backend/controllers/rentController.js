@@ -63,7 +63,7 @@ exports.getAllRentProductsHome = catchAsyncErrors(async (req, res) => {
 
 // Get All  Rent Products
 exports.getAllRentProducts = catchAsyncErrors(async (req, res) => {
-  const resultPerPage = 4;
+  const resultPerPage = 10;
   const rentsCount = await Rent.countDocuments();
   const apiFeatures = new ApiFeatures(Rent.find(), req.query)
     .search()
@@ -110,15 +110,45 @@ exports.updateRentProduct = catchAsyncErrors(async (req, res, next) => {
   if (!rent) {
     return next(new ErrorHandler('Product not found', 404));
   }
+
+  // Images Start Here
+  let images = [];
+
+  if (typeof req.body.images === 'string') {
+    images.push(req.body.images);
+  } else {
+    images = req.files;
+  }
+  console.log(images);
+  if (images.length > 0) {
+    // Deleting Images From Cloudinary
+    for (let i = 0; i < rent.images.length; i++) {
+      await cloudinary.v2.uploader.destroy(rent.images[i].public_id);
+    }
+
+    const imagesLinks = [];
+
+    for (let i = 0; i < images.length; i++) {
+      const imageData = getDataUri(images[i]);
+      const result = await cloudinary.v2.uploader.upload(imageData.content, {
+        folder: 'products',
+      });
+
+      imagesLinks.push({
+        public_id: result.public_id,
+        url: result.secure_url,
+      });
+    }
+
+    req.body.images = imagesLinks;
+  }
+
   rent = await Rent.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
-  res.status(200).json({
-    sucess: true,
-    rent,
-  });
+  return res.status(200).json('Updated');
 });
 
 // Delete  Rent Product

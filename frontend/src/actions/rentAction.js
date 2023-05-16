@@ -19,7 +19,6 @@ import {
   UPDATE_RENT_REQUEST,
   UPDATE_RENT_SUCCESS,
   UPDATE_RENT_FAIL,
-  UPDATE_RENT_RESET,
   DELETE_RENT_REQUEST,
   DELETE_RENT_SUCCESS,
   DELETE_RENT_FAIL,
@@ -110,6 +109,31 @@ export const getRentDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: RENT_DETAILS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//update product --ADMIN
+export const updateRent = (id, rentData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_RENT_REQUEST,
+    });
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    const { data } = await axios.put(
+      `/api/v1/admin/rent/${id}`,
+      rentData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_RENT_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_RENT_FAIL,
       payload: error.response.data.message,
     });
   }

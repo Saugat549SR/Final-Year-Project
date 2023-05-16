@@ -82,8 +82,13 @@
   max-width: 100%;
 }
 .rent {
-  transform: translateY(-50%) translateX(-80vmax);
+  transform: translateY(-40%) translateX(-90vmax);
   display: flex;
+  margin: 2vmax auto;
+  width: 80vw;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
 }
 
 .shiftToLeft {

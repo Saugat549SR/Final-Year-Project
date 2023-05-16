@@ -3,61 +3,55 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   clearErrors,
-  updateProduct,
-  getProductDetails,
-} from '../../actions/productAction';
+  updateRent,
+  getRentDetails,
+} from '../../../actions/rentAction';
 import { useAlert } from 'react-alert';
 import { Button } from '@material-ui/core';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import BoltIcon from '@mui/icons-material/Bolt';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import AccountTreeIcon from '@material-ui/icons/AccountTree';
+
 import DescriptionIcon from '@material-ui/icons/Description';
 import SpellcheckIcon from '@material-ui/icons/Spellcheck';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import SideBar from './Sidebar';
+import SideBar from '../../admin/Sidebar';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { UPDATE_PRODUCT_RESET } from '../../constants/productConstants';
+import { UPDATE_RENT_RESET } from '../../../constants/rentConstants';
 
-const UpdateProduct = () => {
+export const UpdateRent = () => {
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
   const alert = useAlert();
-
-  const { product, error } = useSelector((state) => state.productDetails);
+  const { rent, error } = useSelector((state) => state.rentDetails);
   const {
     loading,
     error: updateError,
     isUpdated,
-  } = useSelector((state) => state.products);
-  console.log(isUpdated);
+  } = useSelector((state) => state.rents);
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(1);
   const [description, setDescription] = useState('');
-  const [Kilometer, setKilometer] = useState('');
+  const [kilometer, setKilometer] = useState('');
   const [power, setPower] = useState('');
-  const [category, setCategory] = useState('');
   const [images, setImages] = useState([]);
   const [oldImages, setOldImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
-
-  const { categories } = useSelector((state) => state.categories);
-  const productId = params.id;
+  const rentId = params.id;
   useEffect(() => {
-    if (product && product._id !== productId) {
-      dispatch(getProductDetails(productId));
+    if (rent && rent._id !== rentId) {
+      dispatch(getRentDetails(rentId));
     } else {
-      setName(product.name);
-      setPrice(product.price);
-      setDescription(product.description);
-      setStock(product.stock);
-      setKilometer(product.Kilometer);
-      setPower(product.power);
-      setCategory(product.category);
-      setOldImages(product.oldImages);
+      setName(rent.name);
+      setPrice(rent.price);
+      setDescription(rent.description);
+      setStock(rent.stock);
+      setKilometer(rent.kilometer);
+      setPower(rent.power);
+      setOldImages(rent.oldImages);
     }
 
     if (error) {
@@ -69,20 +63,11 @@ const UpdateProduct = () => {
       dispatch(clearErrors());
     }
     if (isUpdated) {
-      alert.success('Product Updated Successfully');
-      navigate('/admin/products');
-      dispatch({ type: UPDATE_PRODUCT_RESET });
+      alert.success('Rent Updated Successfully');
+      navigate('/admin/rent/products');
+      dispatch({ type: UPDATE_RENT_RESET });
     }
-  }, [
-    dispatch,
-    alert,
-    error,
-    isUpdated,
-    productId,
-    product,
-    navigate,
-    updateError,
-  ]);
+  }, [dispatch, alert, error, isUpdated, rentId, rent, navigate, updateError]);
 
   const updateProductSubmitHandler = (e) => {
     e.preventDefault();
@@ -93,9 +78,8 @@ const UpdateProduct = () => {
     myForm.set('price', price);
     myForm.set('stock', stock);
     myForm.set('description', description);
-    myForm.set('kilometer', Kilometer);
+    myForm.set('kilometer', kilometer);
     myForm.set('power', power);
-    myForm.set('category', category);
     console.log(images);
     images.forEach((image) => {
       myForm.append('images', image);
@@ -104,10 +88,10 @@ const UpdateProduct = () => {
     // for (let data of myForm.entries()) {
     //   console.log(data);
     // }
-    dispatch(updateProduct(productId, myForm));
+    dispatch(updateRent(rentId, myForm));
     alert.success('Product Updated Successfully');
-    navigate('/admin/products');
-    dispatch({ type: UPDATE_PRODUCT_RESET });
+    navigate('/admin/rent/products');
+    dispatch({ type: UPDATE_RENT_RESET });
   };
   const updateProductImagesChange = (e) => {
     e.preventDefault();
@@ -173,7 +157,7 @@ const UpdateProduct = () => {
                 type="number"
                 placeholder="Kilometers Done"
                 required
-                value={Kilometer}
+                value={kilometer}
                 onChange={(e) => setKilometer(e.target.value)}
               />
             </div>
@@ -186,22 +170,6 @@ const UpdateProduct = () => {
                 value={power}
                 onChange={(e) => setPower(e.target.value)}
               />
-            </div>
-
-            <div>
-              <AccountTreeIcon />
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option>Choose Category</option>
-                {categories &&
-                  categories.map((option) => (
-                    <option key={option._id} value={option.title}>
-                      {option.title}
-                    </option>
-                  ))}
-              </select>
             </div>
 
             <div id="createProductFormFile">
@@ -238,5 +206,3 @@ const UpdateProduct = () => {
     </Fragment>
   );
 };
-
-export default UpdateProduct;
