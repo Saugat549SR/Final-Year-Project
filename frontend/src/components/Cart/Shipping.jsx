@@ -17,15 +17,21 @@ const Shipping = () => {
   const alert = useAlert();
   const { shippingInfo } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
-  const [firstName, setName] = useState(user.firstName);
-  const [address, setAddress] = useState(shippingInfo.address);
-  const [city, setCity] = useState(shippingInfo.city);
-  const [contact, setContact] = useState(shippingInfo.contact || user.contact);
+  const [firstName, setName] = useState(user?.firstName);
+  const [address, setAddress] = useState(shippingInfo?.address);
+  const [city, setCity] = useState(shippingInfo?.city);
+  const [contact, setContact] = useState(
+    shippingInfo?.contact || user?.contact
+  );
   const [province, SetProvince] = useState(
-    shippingInfo.province || 'Bagmati Province'
+    shippingInfo?.province || 'Bagmati Province'
   );
   const shippingSubmit = (e) => {
     e.preventDefault();
+    if (user.role === 'admin') {
+      alert.error('You are not authorized to order items.');
+      return;
+    }
     if (contact.length < 10 || contact.length > 10) {
       alert.error('Phone Number should be 10 digit Long');
       return;
@@ -60,7 +66,7 @@ const Shipping = () => {
                 type="text"
                 placeholder="Name"
                 name="firstName"
-                value={user.firstName}
+                value={user?.firstName}
                 required
                 onChange={(e) => setName(e.target.value)}
               />

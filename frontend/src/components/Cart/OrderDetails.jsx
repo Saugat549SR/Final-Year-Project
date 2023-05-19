@@ -42,19 +42,19 @@ const OrderDetails = () => {
       <div className="confirmOrderPage">
         <div>
           <div className="confirmshippingArea">
-            <Typography>{user.firstName}'s Shipping Info</Typography>
+            <Typography>{user?.firstName}'s Shipping Info</Typography>
             <div className="confirmshippingAreaBox">
               <div>
                 <p>Name:</p>
-                <span>{user.firstName}</span>
+                <span>{user?.firstName}</span>
               </div>
               <div>
                 <p>Phone:</p>
-                <span>{shippingInfo.contact}</span>
+                <span>{shippingInfo?.contact}</span>
               </div>
               <div>
                 <p>City:</p>
-                <span>{shippingInfo.city}</span>
+                <span>{shippingInfo?.city}</span>
               </div>
               <div>
                 <p>Address:</p>
@@ -70,7 +70,7 @@ const OrderDetails = () => {
                   <div key={item.product}>
                     <img src={item.image} alt="Product" />
                     <Link to={`/product/${item.product}`}>
-                      {item.name}
+                      {item.name} X {item.stock}
                     </Link>{' '}
                     <span>
                       <b>Rs.{item.price}</b>
@@ -102,7 +102,12 @@ const OrderDetails = () => {
               <span>₹{totalPrice}</span>
             </div>
 
-            <PayButton order={order} cartItems={cartItems}>
+            <PayButton
+              order={order}
+              cartItems={cartItems}
+              user={user}
+              totalPrice={totalPrice}
+            >
               Proceed To Payment
             </PayButton>
           </div>

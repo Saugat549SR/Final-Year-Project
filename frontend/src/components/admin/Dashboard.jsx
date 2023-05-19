@@ -12,6 +12,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   const { products } = useSelector((state) => state.products);
+  const { rents } = useSelector((state) => state.rents);
   const { orders } = useSelector((state) => state.allOrders);
   const { users } = useSelector((state) => state.allUsers);
 
@@ -46,8 +47,12 @@ const Dashboard = () => {
             </div>
             <div className="dashboardSummaryBox2">
               <Link to="/admin/products">
-                <p>Product</p>
+                <p>Buy Product</p>
                 <p>{products && products.length}</p>
+              </Link>
+              <Link to="/admin/rent/products">
+                <p>rent Product</p>
+                <p>{rents && rents.length}</p>
               </Link>
 
               <Link to="/admin/orders">

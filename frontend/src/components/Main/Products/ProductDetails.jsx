@@ -53,9 +53,12 @@ export const ProductDetails = () => {
                 {product.stock < 1 ? 'OutOfStock' : 'InStock'}
               </b>
             </p>
-
             <div className="cart-buttons">
-              <button className="add-to-cart-button" onClick={addToCartHandler}>
+              <button
+                className="add-to-cart-button"
+                onClick={addToCartHandler}
+                disabled={product.stock === 0}
+              >
                 ADD TO CART
               </button>
             </div>

@@ -40,6 +40,7 @@ import { Search } from './components/Main/Products/Search';
 import { UpdateUser } from './components/admin/UpdateUser';
 import { CategoryList } from './components/admin/CategoryList';
 import { UpdateRent } from './components/Main/Rents/UpdateRent';
+import { OrderSuccess } from './components/Order/OrderSuccess';
 
 function App() {
   const dispatch = useDispatch();
@@ -61,37 +62,38 @@ function App() {
         <Route path="/products" exact element={<ProductsPage />} />
         <Route path="/rents" exact element={<RentsPage />} />
         {/* <Route path="/products/:keyword" exact element={<ProductsPage />} /> */}
-        <Route element={<ProtectedRoute isAdmin={true} />}>
-          <Route path="/admin/dashboard" exact element={<Dashboard />} />
-          <Route path="/admin/products" exact element={<ProductList />} />
-          <Route path="/admin/rent/products" exact element={<RentList />} />
-          <Route path="/admin/product" exact element={<NewProduct />} />
-          <Route path="/admin/product/:id" exact element={<UpdateProduct />} />
-          <Route path="/admin/orders" exact element={<OrderList />} />
-          <Route path="/admin/order/:id" exact element={<ProcessOrder />} />
-          <Route path="/admin/rent/new" exact element={<NewRent />} />
-          <Route path="/admin/users" exact element={<UserList />} />
-          <Route path="/admin/user/:id" exact element={<UpdateUser />} />
-          <Route path="/admin/rent/:id" exact element={<UpdateRent />} />
+        {/* <Route element={<ProtectedRoute isAdmin={true} />}> */}
+        <Route path="/admin/dashboard" exact element={<Dashboard />} />
+        <Route path="/admin/products" exact element={<ProductList />} />
+        <Route path="/admin/rent/products" exact element={<RentList />} />
+        <Route path="/admin/product" exact element={<NewProduct />} />
+        <Route path="/admin/product/:id" exact element={<UpdateProduct />} />
+        <Route path="/admin/orders" exact element={<OrderList />} />
+        <Route path="/admin/order/:id" exact element={<ProcessOrder />} />
+        <Route path="/admin/rent/new" exact element={<NewRent />} />
+        <Route path="/admin/users" exact element={<UserList />} />
+        <Route path="/admin/user/:id" exact element={<UpdateUser />} />
+        <Route path="/admin/rent/:id" exact element={<UpdateRent />} />
 
-          <Route
-            path="/admin/create/category"
-            exact
-            element={<CreateCategory />}
-          />
-          <Route path="/admin/category" exact element={<CategoryList />} />
-        </Route>
-        <Route element={<ProtectedRoute />}>
-          <Route path="/account" exact element={<Profile />} />
-          <Route path="/me/update" exact element={<UpdateProfile />} />
-          <Route path="/password/update" exact element={<UpdatePassword />} />
-          <Route path="/shipping" exact element={<Shipping />} />
-          <Route path="/rent/shipping" exact element={<RentShipping />} />
-          <Route path="/rent/details" exact element={<RentOrderDetails />} />
-          <Route path="/order/details" exact element={<OrderDetails />} />
-          <Route path="/order" exact element={<MyOrders />} />
-          <Route path="/order/:id" exact element={<OrderDetailss />} />
-        </Route>
+        <Route
+          path="/admin/create/category"
+          exact
+          element={<CreateCategory />}
+        />
+        <Route path="/admin/category" exact element={<CategoryList />} />
+        {/* </Route> */}
+        {/* <Route element={<ProtectedRoute />}> */}
+        <Route path="/account" exact element={<Profile />} />
+        <Route path="/me/update" exact element={<UpdateProfile />} />
+        <Route path="/password/update" exact element={<UpdatePassword />} />
+        <Route path="/shipping" exact element={<Shipping />} />
+        <Route path="/rent/shipping" exact element={<RentShipping />} />
+        <Route path="/rent/details" exact element={<RentOrderDetails />} />
+        <Route path="/order/details" exact element={<OrderDetails />} />
+        <Route path="/order" exact element={<MyOrders />} />
+        <Route path="/order/:id" exact element={<OrderDetailss />} />
+        <Route path="/order/success" exact element={<OrderSuccess />} />
+        {/* </Route> */}
         <Route path="/category/:cat" element={<CategoryProduct />} exact />
         <Route path="/password/forgot" exact element={<ForgotPassword />} />
         <Route

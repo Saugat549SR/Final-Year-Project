@@ -2,7 +2,7 @@ import KhaltiCheckout from 'khalti-checkout-web';
 import axios from 'axios';
 import { useAlert } from 'react-alert';
 
-export const PayButton = ({ order, cartItems }) => {
+export const PayButton = ({ order, cartItems, user, totalPrice }) => {
   const alert = useAlert();
   let config = {
     // replace this key with yours
@@ -17,7 +17,7 @@ export const PayButton = ({ order, cartItems }) => {
         // code to update isPaid status
         const ord = {
           ...order,
-          paymentInfo: { id: payload.idx, status: 'succeed' },
+          paymentInfo: { id: payload.idx, status: 'succeeded' },
         };
         console.log(ord);
 
@@ -27,12 +27,11 @@ export const PayButton = ({ order, cartItems }) => {
           console.log(data);
           cartItems.forEach((item, index) => {
             if (item.productId === ord.orderItems[0].productId) {
-              item.stock -= order.orderItems[0].quantity;
+              item.stock -= order.orderItems[0].stock;
 
               cartItems.splice(index, 1);
             }
           });
-          // window.location.href = '/';
         } catch (error) {
           console.log(error);
         }
@@ -40,6 +39,7 @@ export const PayButton = ({ order, cartItems }) => {
         if (ord) {
           alert.success('Order placed Successfully');
         }
+        window.location.href = '/order/success';
       },
       // onError handler is optional
       onError(error) {
@@ -52,20 +52,20 @@ export const PayButton = ({ order, cartItems }) => {
     },
     paymentPreference: ['KHALTI', 'MOBILE_BANKING'],
   };
-
+  // const wholeTotal = totalPrice * 100;
   let checkout = new KhaltiCheckout(config);
+  const handleCheckout = () => {
+    if (user.role === 'admin') {
+      alert.error('You are not authorized to order items.');
+      return;
+    }
+    checkout.show({ amount: totalPrice });
+  };
 
   return (
     <>
-      <button
-        id="payment-button"
-        onClick={() => {
-          console.log('check');
-          checkout.show({ amount: 1000 });
-        }}
-      >
-        {' '}
-        Pay{' '}
+      <button id="payment-button" onClick={handleCheckout}>
+        Pay
       </button>
     </>
   );

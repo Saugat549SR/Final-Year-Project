@@ -70,18 +70,25 @@ exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
 exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
 
-  if (order.orderStatus === 'Delivered') {
-    return next(new ErrorHandler('You have already delivered this order', 404));
+  if (!order) {
+    return next(new ErrorHandler('Order not found with this id', 404));
   }
-  order.orderItems.forEach(async (orders) => {
-    await updateStock(orders.product);
-  });
+
+  if (order.orderStatus === 'Delivered') {
+    return next(new ErrorHandler('Already delivered the order', 400));
+  }
 
   order.orderStatus = req.body.status;
 
   if (req.body.status === 'Delivered') {
     order.deliveredAt = Date.now();
+    order.orderItems.forEach(async (ord) => {
+      const product = await Product.findById(ord.product);
+      product.stock -= ord.stock;
+      await product.save({ validateBeforeSave: false });
+    });
   }
+
   await order.save({ validateBeforeSave: false });
 
   res.status(200).json({
@@ -103,6 +110,31 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
   }
 
   await order.remove();
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+//cancelled order
+exports.cancelOrder = catchAsyncErrors(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+
+  if (!order) {
+    return next(new ErrorHandler('Order not found with this id', 404));
+  }
+
+  if (order.orderStatus === 'Cancelled') {
+    return next(new ErrorHandler('Order is already cancelled', 400));
+  }
+
+  if (order.orderStatus === 'Delivered') {
+    return next(new ErrorHandler('Cannot cancel a delivered order', 400));
+  }
+
+  order.orderStatus = 'Cancelled';
+
+  await order.save({ validateBeforeSave: false });
 
   res.status(200).json({
     success: true,

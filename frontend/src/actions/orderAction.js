@@ -13,6 +13,9 @@ import {
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
   MY_ORDERS_REQUEST,
+  CANCEL_ORDER_REQUEST,
+  CANCEL_ORDER_SUCCESS,
+  CANCEL_ORDER_FAIL,
   MY_ORDERS_SUCCESS,
   MY_ORDERS_FAIL,
   CLEAR_ERRORS,
@@ -102,6 +105,28 @@ export const myOrders = () => async (dispatch) => {
     dispatch({
       type: MY_ORDERS_FAIL,
       payload: error.response.data.message,
+    });
+  }
+};
+
+//cancel order
+export const cancelOrder = (orderId) => async (dispatch) => {
+  try {
+    dispatch({ type: CANCEL_ORDER_REQUEST });
+
+    await axios.post(`/api/v1/order/cancel/${orderId}`);
+
+    dispatch({ type: CANCEL_ORDER_SUCCESS, payload: orderId });
+    window.location.reload(false);
+  } catch (error) {
+    console.log(error);
+    const errorMessage =
+      error.response && error.response.data && error.response.data.message
+        ? error.response.data.message
+        : '';
+    dispatch({
+      type: CANCEL_ORDER_FAIL,
+      payload: errorMessage,
     });
   }
 };

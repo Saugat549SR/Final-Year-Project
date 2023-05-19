@@ -12,6 +12,9 @@ import {
   DELETE_ORDER_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
+  CANCEL_ORDER_REQUEST,
+  CANCEL_ORDER_SUCCESS,
+  CANCEL_ORDER_FAIL,
   ORDER_DETAILS_FAIL,
   MY_ORDERS_REQUEST,
   MY_ORDERS_SUCCESS,
@@ -124,10 +127,22 @@ export const orderDetailsReducer = (state = { order: {} }, action) => {
 export const myOrdersReducer = (state = { myorders: [] }, action) => {
   switch (action.type) {
     case MY_ORDERS_REQUEST:
+    case CANCEL_ORDER_REQUEST:
       return {
         loading: true,
       };
+    case CANCEL_ORDER_SUCCESS:
+      const updatedOrders = state.myorders.map((order) =>
+        order._id === action.payload
+          ? { ...order, orderStatus: 'Cancelled' }
+          : order
+      );
 
+      return {
+        ...state,
+        loading: false,
+        myorders: updatedOrders,
+      };
     case MY_ORDERS_SUCCESS:
       return {
         loading: false,
@@ -135,6 +150,7 @@ export const myOrdersReducer = (state = { myorders: [] }, action) => {
       };
 
     case MY_ORDERS_FAIL:
+    case CANCEL_ORDER_FAIL:
       return {
         loading: false,
         error: action.payload,

@@ -138,10 +138,7 @@ export const ProcessOrder = () => {
                           <Link to={`/product/${item.product}`}>
                             {item.name}
                           </Link>{' '}
-                          <span>
-                            {item.quantity} X ₹{item.price} ={' '}
-                            <b>₹{item.price * item.quantity}</b>
-                          </span>
+                          <span>Rs.{item.price}</span>
                         </div>
                       ))}
                   </div>

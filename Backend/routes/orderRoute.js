@@ -6,6 +6,7 @@ const {
   getAllOrders,
   updateOrder,
   deleteOrder,
+  cancelOrder,
 } = require('../controllers/orderController');
 const multer = require('multer');
 
@@ -25,7 +26,7 @@ router.route('/order/new').post(isAuthenticatedUser, upload.none(), newOrder);
 router.route('/order/:id').get(isAuthenticatedUser, getSingleOrder);
 
 router.route('/orders/me').get(isAuthenticatedUser, myOrders);
-
+router.route('/order/cancel/:id').post(isAuthenticatedUser, cancelOrder);
 router
   .route('/admin/orders')
   .get(isAuthenticatedUser, authorizeRoles('admin'), getAllOrders);

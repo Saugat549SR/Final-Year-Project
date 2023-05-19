@@ -7,8 +7,10 @@ import { Typography } from '@material-ui/core';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import { Link, useNavigate } from 'react-router-dom';
 import { Navbar } from '../Main/Homepage/Navbar';
+import { useAlert } from 'react-alert';
 
 const Cart = () => {
+  const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { cartItems } = useSelector((state) => state.cart);
@@ -19,6 +21,10 @@ const Cart = () => {
 
   const checkoutHandler = () => {
     if (user) {
+      if (user.role === 'admin') {
+        alert.error('You are not authorized to order items.');
+        return;
+      }
       navigate('/shipping');
     } else {
       // alert.error('Please Login to access this resouces');
