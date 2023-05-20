@@ -39,8 +39,10 @@ export const RentOrderDetails = () => {
       orderItems: {
         name: rent.name,
         price: rent.price,
+        stock: rent.stock,
         image: rent?.images?.[0]?.url,
         product: rent._id,
+        productType: 'rent',
       },
 
       totalPrice: totalPrice,
@@ -115,7 +117,9 @@ export const RentOrderDetails = () => {
               <span>₹{totalPrice}</span>
             </div>
 
-            <PayButton order={order}>Proceed To Payment</PayButton>
+            <PayButton order={order} user={user} totalPrice={totalPrice}>
+              Proceed To Payment
+            </PayButton>
           </div>
         </div>
       </div>

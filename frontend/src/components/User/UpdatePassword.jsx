@@ -18,11 +18,19 @@ const UpdatePassword = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
   const { error, isUpdated, loading } = useSelector((state) => state.profile);
 
   const updatePasswordSubmit = (e) => {
     e.preventDefault();
+    if (newPassword.length < 8) {
+      setPasswordError(' Password should be at least 8 Characters');
+    }
+    if (confirmPassword.length < 8) {
+      setConfirmPasswordError(' Password should be at least 8 Characters');
+    }
 
     const myForm = new FormData();
 
@@ -85,6 +93,17 @@ const UpdatePassword = () => {
                     className="input"
                   />
                 </div>
+                {passwordError && (
+                  <div
+                    style={{
+                      fontSize: '0.5rem',
+                      alignItems: 'flex-start',
+                      color: 'red',
+                    }}
+                  >
+                    {passwordError}
+                  </div>
+                )}
                 <div className="passwords">
                   <LockIcon />
                   <input
@@ -97,6 +116,17 @@ const UpdatePassword = () => {
                     className="input"
                   />
                 </div>
+                {confirmPasswordError && (
+                  <div
+                    style={{
+                      fontSize: '0.5rem',
+                      alignItems: 'flex-start',
+                      color: 'red',
+                    }}
+                  >
+                    {confirmPasswordError}
+                  </div>
+                )}
                 <input
                   type="submit"
                   value="Change"

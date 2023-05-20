@@ -74,13 +74,13 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
       subject: `Email Verification`,
       message,
     });
-    res.status(200).json({
+    return res.status(200).json({
       sucess: true,
       message: `Email sent to ${user.email} sucessfully`,
     });
   } catch (error) {
     console.error('Error sending verification email:', error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: 'Error sending verification email. Please try again later',
     });
@@ -123,13 +123,19 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findOne({ email }).select('+password');
 
   if (!user) {
-    return next(new ErrorHandler('Invalid email or password', 401));
+    return res.status(401).json({
+      success: false,
+      message: 'Invalid email or password',
+    });
   }
 
   const isPasswordMatched = await user.comparePassword(password);
 
   if (!isPasswordMatched) {
-    return next(new ErrorHandler('Invalid email or password', 401));
+    return res.status(401).json({
+      success: false,
+      message: 'Invalid email or password',
+    });
   }
 
   tokenSend(user, 200, res);

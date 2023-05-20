@@ -37,7 +37,7 @@ const UpdateProduct = () => {
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(1);
   const [description, setDescription] = useState('');
-  const [Kilometer, setKilometer] = useState('');
+  const [kilometer, setKilometer] = useState('');
   const [power, setPower] = useState('');
   const [category, setCategory] = useState('');
   const [images, setImages] = useState([]);
@@ -54,7 +54,7 @@ const UpdateProduct = () => {
       setPrice(product.price);
       setDescription(product.description);
       setStock(product.stock);
-      setKilometer(product.Kilometer);
+      setKilometer(product.kilometer);
       setPower(product.power);
       setCategory(product.category);
       setOldImages(product.oldImages);
@@ -93,7 +93,7 @@ const UpdateProduct = () => {
     myForm.set('price', price);
     myForm.set('stock', stock);
     myForm.set('description', description);
-    myForm.set('kilometer', Kilometer);
+    myForm.set('kilometer', kilometer);
     myForm.set('power', power);
     myForm.set('category', category);
     console.log(images);
@@ -173,7 +173,7 @@ const UpdateProduct = () => {
                 type="number"
                 placeholder="Kilometers Done"
                 required
-                value={Kilometer}
+                value={kilometer}
                 onChange={(e) => setKilometer(e.target.value)}
               />
             </div>

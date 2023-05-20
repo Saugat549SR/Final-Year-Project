@@ -120,13 +120,9 @@ export const cancelOrder = (orderId) => async (dispatch) => {
     window.location.reload(false);
   } catch (error) {
     console.log(error);
-    const errorMessage =
-      error.response && error.response.data && error.response.data.message
-        ? error.response.data.message
-        : '';
     dispatch({
       type: CANCEL_ORDER_FAIL,
-      payload: errorMessage,
+      payload: error.response.data.message,
     });
   }
 };

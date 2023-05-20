@@ -1,5 +1,6 @@
 const Order = require('../models/orderModel');
 const Product = require('../models/productModel');
+const Rent = require('../models/rentModel');
 const ErrorHandler = require('../utils/errorhandler');
 const catchAsyncErrors = require('../middleware/catchAsyncError');
 
@@ -80,12 +81,23 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
 
   order.orderStatus = req.body.status;
 
+  //new code
   if (req.body.status === 'Delivered') {
     order.deliveredAt = Date.now();
     order.orderItems.forEach(async (ord) => {
-      const product = await Product.findById(ord.product);
-      product.stock -= ord.stock;
-      await product.save({ validateBeforeSave: false });
+      let product;
+
+      if (ord.productType === 'rent') {
+        product = await Rent.findById(ord.product);
+      } else {
+        // Find product by id in Rent model
+        product = await Product.findById(ord.product);
+      }
+
+      if (product) {
+        product.stock -= ord.stock;
+        await product.save({ validateBeforeSave: false });
+      }
     });
   }
 
@@ -100,7 +112,6 @@ async function updateStock(id) {
   const product = await Product.findById(id);
   await product.save({ validateBeforeSave: false });
 }
-
 // delete Order -- Admin
 exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);

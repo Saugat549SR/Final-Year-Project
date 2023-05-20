@@ -46,6 +46,7 @@ export const ProductDetails = () => {
           <div className="right">
             <h1 className="product-title">{product.name}</h1>
             <h2 className="product-price">{`Rs ${product.price}`}</h2>
+
             <p className="product-description">{product.description}</p>
             <p>
               Status:

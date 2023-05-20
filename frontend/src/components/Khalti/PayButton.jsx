@@ -1,8 +1,10 @@
 import KhaltiCheckout from 'khalti-checkout-web';
 import axios from 'axios';
 import { useAlert } from 'react-alert';
+import { useNavigate } from 'react-router-dom';
 
 export const PayButton = ({ order, cartItems, user, totalPrice }) => {
+  const navigate = useNavigate();
   const alert = useAlert();
   let config = {
     // replace this key with yours
@@ -39,7 +41,8 @@ export const PayButton = ({ order, cartItems, user, totalPrice }) => {
         if (ord) {
           alert.success('Order placed Successfully');
         }
-        window.location.href = '/order/success';
+        navigate('/order/success');
+        // window.location.href = '/order/success';
       },
       // onError handler is optional
       onError(error) {

@@ -132,7 +132,7 @@ export const myOrdersReducer = (state = { myorders: [] }, action) => {
         loading: true,
       };
     case CANCEL_ORDER_SUCCESS:
-      const updatedOrders = state.myorders.map((order) =>
+      const updatedOrders = state?.myorders?.map((order) =>
         order._id === action.payload
           ? { ...order, orderStatus: 'Cancelled' }
           : order

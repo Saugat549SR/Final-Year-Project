@@ -22,18 +22,17 @@ const Login = () => {
     e.preventDefault();
     dispatch(login(loginEmail, loginPassword));
   };
-  const redirect = location.search ? location.search.split('=')[1] : '/';
+  // const redirect = location.search ? location.search.split('=')[1] : '/';
   useEffect(() => {
-    console.log(error);
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
     if (isAuthenticated) {
       alert.success('Login Successfully');
-      navigate(redirect);
+      navigate('/');
     }
-  }, [dispatch, error, alert, isAuthenticated, redirect, navigate]);
+  }, [dispatch, error, alert, isAuthenticated, navigate]);
   const queryParams = new URLSearchParams(location.search);
   const verified = queryParams.get('verified');
   return (

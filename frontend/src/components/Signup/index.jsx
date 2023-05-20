@@ -20,13 +20,19 @@ const Signup = () => {
     avatar: '',
     avatarPreview: null,
   });
-  const { error, loading } = useSelector((state) => state.user);
+  const { error, loading, isAuthenticated } = useSelector(
+    (state) => state.user
+  );
 
   const { firstName, lastName, email, password, address, contact } = user;
   const [avatar, setAvatar] = useState('/Profile.png');
   const [avatarPreview, setAvatarPreview] = useState('/Profile.png');
+  const [passwordError, setPasswordError] = useState('');
   const registerSubmit = (e) => {
     e.preventDefault();
+    if (password.length < 8) {
+      setPasswordError(' Password should be at least 8 Characters');
+    }
 
     const myForm = new FormData();
 
@@ -66,7 +72,10 @@ const Signup = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error, alert]);
+    if (isAuthenticated) {
+      alert.success('Register Successfully');
+    }
+  }, [dispatch, error, alert, isAuthenticated]);
 
   return (
     <div className={styles.img}>
@@ -126,6 +135,18 @@ const Signup = () => {
                 required
                 className={styles.input}
               />
+              {passwordError && (
+                <div
+                  className={styles.error_message}
+                  style={{
+                    fontSize: '0.5rem',
+                    alignItems: 'flex-start',
+                    color: 'red',
+                  }}
+                >
+                  {passwordError}
+                </div>
+              )}
               <input
                 type="text"
                 placeholder="Address"

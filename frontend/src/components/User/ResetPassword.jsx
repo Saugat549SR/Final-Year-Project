@@ -22,10 +22,17 @@ const ResetPassword = () => {
   const { error, success, loading } = useSelector(
     (state) => state.forgotPassword
   );
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
   const resetPasswordSubmit = (e) => {
     e.preventDefault();
-
+    if (Password.length < 8) {
+      setPasswordError(' Password should be at least 8 Characters');
+    }
+    if (confirmPassword.length < 8) {
+      setConfirmPasswordError(' Password should be at least 8 Characters');
+    }
     const myForm = new FormData();
 
     myForm.set('password', Password);
@@ -70,6 +77,17 @@ const ResetPassword = () => {
                     className="passwordInput"
                   />
                 </div>
+                {passwordError && (
+                  <div
+                    style={{
+                      fontSize: '0.5rem',
+                      alignItems: 'flex-start',
+                      color: 'red',
+                    }}
+                  >
+                    {passwordError}
+                  </div>
+                )}
                 <div className="resetpasswords">
                   <LockIcon />
                   <input
@@ -82,6 +100,17 @@ const ResetPassword = () => {
                     className="passwordInput"
                   />
                 </div>
+                {confirmPasswordError && (
+                  <div
+                    style={{
+                      fontSize: '0.5rem',
+                      alignItems: 'flex-start',
+                      color: 'red',
+                    }}
+                  >
+                    {confirmPasswordError}
+                  </div>
+                )}
                 <input
                   type="submit"
                   value="Update"
